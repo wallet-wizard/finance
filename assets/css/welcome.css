@@ -1,0 +1,23 @@
+
+.income-section {
+    border: 1px solid black;
+    padding: 30px;
+}
+.budget-section {
+    border: 1px solid black;
+    padding: 30px;
+}
+
+.income-block {
+    margin: 1em;
+    padding: 0.7em;
+    background-color: rgb(161, 160, 160);
+    border-radius: 10px;
+}
+
+.budget-block {
+    margin: 1em;
+    padding: 0.7em;
+    background-color: rgb(161, 160, 160);
+    border-radius: 10px;
+}
