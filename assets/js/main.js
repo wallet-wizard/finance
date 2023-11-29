@@ -4,20 +4,25 @@ var countrySelection = prompt("Please enter your country of residence")
 
 var restCountryAPILink = "https://restcountries.com/v3.1/name/" + countrySelection
 
-fetch(restCountryAPILink).then(function(response){
+
+var currencyInfo = fetch(restCountryAPILink).then(function(response){
     return response.json();
 }).then(function (data){
 
-    console.log(data[0].currencies)
+    var currencyCode = Object.keys(data[0].currencies)[0];
+    localStorage.setItem('currency-code', currencyCode)
 
-    var currencyCode = Object.keys(data[0].currencies)[0]
     var currencyName = data[0].currencies[currencyCode].name;
+    localStorage.setItem('currency-name', currencyName)
+
     var currencySymbol = data[0].currencies[currencyCode].symbol;
+    localStorage.setItem('currency-symbol', currencySymbol)
 
 
-    console.log(currencyCode, currencyName, currencySymbol)
 
-    return {currencyCode, currencyName, currencySymbol}
+    var currencyObject = {currencyCode, currencyName, currencySymbol}
+    console.log(currencyObject)
+    return currencyObject
 
 })
 
@@ -40,11 +45,13 @@ fetch(restCountryAPILink).then(function(response){
 // Function to obtain the exchange rate, based on the country's code
 
 
-var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + currencyCode
+
+var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + localStorage.getItem('currency-code')
 
 fetch(currencyRateLink).then(function(response){
     return response.json();
 }).then(function (data){
 
-    console.log(data.data)
+    console.log(data)
+
 })
