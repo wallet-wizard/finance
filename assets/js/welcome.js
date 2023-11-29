@@ -17,14 +17,27 @@ const addBudgetBtn = document.querySelector("#add-budget");
 const FREQUENCY = ["Monthly", "Weekly", "Yearly"];
 
 
-// EVENT LISTENER
 
+
+// EVENT LISTENERS
+
+addIncomeBtn.addEventListener('click', () => {
+    addNewBlock(incomeDiv, 'income', 'My Company LTD.');
+});
 
 addBudgetBtn.addEventListener('click', () => {
+    addNewBlock(budgetDiv, 'budget', 'Groceries');
+});
+
+
+
+// FUNCTIONS
+
+function addNewBlock(div, type, placeholder) {
 
     // Create Outer Div
     const outerBlock = document.createElement("div");
-    outerBlock.classList.add("budget-block", "row");
+    outerBlock.classList.add(`${type}-block`, "row");
 
     // Create Columns
     const col1 = document.createElement("div");
@@ -43,9 +56,9 @@ addBudgetBtn.addEventListener('click', () => {
     const descInput = document.createElement("input");
     descInput.classList.add("form-control");
     descInput.setAttribute("type", "text");
-    descInput.setAttribute("placeholder", "Description");
+    descInput.setAttribute("placeholder", placeholder);
 
-    const freqSelection = document.createElement("input");
+    const freqSelection = document.createElement("select");
     freqSelection.classList.add("form-control");
 
     for (const i in FREQUENCY) {
@@ -64,6 +77,5 @@ addBudgetBtn.addEventListener('click', () => {
 
     outerBlock.append(col1, col2, col3);
 
-    budgetDiv.append(outerBlock);
-
-});
+    div.append(outerBlock);
+}
