@@ -14,6 +14,10 @@ const budgetDiv = document.querySelector(".budget-blocks");
 const addIncomeBtn = document.querySelector("#add-income");
 const addBudgetBtn = document.querySelector("#add-budget");
 
+const removeIncomeBtn = document.querySelector("#remove-income");
+const removeBudgetBtn = document.querySelector("#remove-budget");
+
+
 const FREQUENCY = ["Monthly", "Weekly", "Yearly"];
 
 
@@ -22,18 +26,26 @@ const FREQUENCY = ["Monthly", "Weekly", "Yearly"];
 // EVENT LISTENERS
 
 addIncomeBtn.addEventListener('click', () => {
-    addNewBlock(incomeDiv, 'income', 'My Company LTD.');
+    addNewBlock(incomeDiv, 'income', 'My Company LTD.', '$');
 });
 
 addBudgetBtn.addEventListener('click', () => {
-    addNewBlock(budgetDiv, 'budget', 'Groceries');
+    addNewBlock(budgetDiv, 'budget', 'Groceries', '$');
+});
+
+removeIncomeBtn.addEventListener('click', () => {
+    removeLastChild(incomeDiv);
+});
+
+removeBudgetBtn.addEventListener('click', () => {
+    removeLastChild(budgetDiv);
 });
 
 
 
 // FUNCTIONS
 
-function addNewBlock(div, type, placeholder) {
+function addNewBlock(div, type, placeholder, symbol) {
 
     // Create Outer Div
     const outerBlock = document.createElement("div");
@@ -51,7 +63,7 @@ function addNewBlock(div, type, placeholder) {
     const amountInput = document.createElement("input");
     amountInput.classList.add("form-control");
     amountInput.setAttribute("type", "text");
-    amountInput.setAttribute("placeholder", "$ Amount");
+    amountInput.setAttribute("placeholder", `${symbol} Amount`);
 
     const descInput = document.createElement("input");
     descInput.classList.add("form-control");
@@ -69,7 +81,6 @@ function addNewBlock(div, type, placeholder) {
         freqSelection.append(optionEl)
     }
 
-
     // Append the block
     col1.append(amountInput);
     col2.append(descInput);
@@ -78,4 +89,15 @@ function addNewBlock(div, type, placeholder) {
     outerBlock.append(col1, col2, col3);
 
     div.append(outerBlock);
+}
+
+function removeLastChild(element) {
+    console.log("here!")
+    let children = element.childElementCount;
+    console.log(children)
+
+    if (children > 1) {
+        let lastChild = element.lastElementChild;
+        element.removeChild(lastChild);
+    } 
 }
