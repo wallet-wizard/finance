@@ -3,10 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/main.css">
     <title>Dashboard</title>
 </head>
 <body>
+
+    <section class="dashboard">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="pie-chart col-lg-4">hi</div>
+                <div class="current-month col-lg-4">hi</div>
+                <div class="recent-transactions col-lg-4">hi</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="new-expense bg-secondary">
+        <div class="container-fluid ">
+            <div class="row justify-center">
+                <div class="header-wrapper col-lg-4"><h4 class="text-white">New expense/income:</h4></div>
+                <div class="amount-wrapper col-lg-2 px-3"><input class="form-control" type="text" placeholder="Amount" aria-label="default input example"></div>
+                <div class="description-wrapper col-lg-3"><input class="form-control" type="text" placeholder="Short Description" aria-label="default input example"></div>
+                <div class="dropdown-wrapper col-lg-3"><div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Expense Type
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Groceries</a></li>
+                      <li><a class="dropdown-item" href="#">Expenses</a></li>
+                      <li><a class="dropdown-item" href="#">Subscriptions</a></li>
+                      <li><a class="dropdown-item" href="#">Health</a></li>
+                      <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                  </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <section class="budget">
+        <div class="container-fluid budget-categories">
     
+                <div class="income" id="main-income">
+                    <h6>Main Job</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <div class="income" id="other-income">
+                    <h6>Freelance</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <hr>  
+
+                <div class="expense" id="groceries">
+                    <h6>Groceries</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <div class="expense" id="expenses">
+                    <h6>Expenses</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <div class="expense" id="subscriptions">
+                    <h6>Subscriptions</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <div class="expense" id="health">
+                    <h6>Health</h6>
+                    <p class="category-amount"></p>
+                </div>
+
+                <div class="expense" id="others">
+                    <h6>Other</h6>
+                    <p class="category-amount"></p>
+                </div>
+        </div>
+    </section>
+    
+    <!-- bootstrap popper cdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="../js/welcome.js"></script>
     <script src="../js/main.js"></script>
 </body>

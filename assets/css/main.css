@@ -1,0 +1,20 @@
+
+section.dashboard div{
+    height: 20vh;
+    background-color: grey;
+}
+
+section.new-expense div{
+    height: 10vh;
+}
+
+/* budget section styles */
+.budget-categories{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+section.budget div{
+    height: 50vh;
+    max-width: 100%;
+}
