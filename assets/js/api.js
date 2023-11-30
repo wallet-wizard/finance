@@ -1,6 +1,7 @@
 // Function to obtain the country's currency name, code and symbol
 
-var countrySelection = prompt("Please enter your country of residence")
+// var countrySelection = prompt("Please enter your country of residence")
+var countrySelection = 'Greece';
 
 var allCountriesLink = "https://restcountries.com/v3.1/all"
 
