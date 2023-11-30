@@ -21,7 +21,6 @@ const FREQUENCY = ["Monthly", "Weekly", "Yearly"];
 
 
 
-
 // EVENT LISTENERS
 
 addIncomeBtn.addEventListener('click', () => {
@@ -39,6 +38,26 @@ removeIncomeBtn.addEventListener('click', () => {
 removeBudgetBtn.addEventListener('click', () => {
     removeLastChild(budgetDiv);
 });
+
+
+
+formDiv.addEventListener('submit', (event) => {
+    event.preventDefault();
+    console.log("I DID NOT REFRESH!");
+
+    // Get localStorage stored data
+
+    // Check username and see if it exists - go to main page if it does
+
+    // Store all info from form
+
+    // Check if info is valid / sufficient - alert user if not
+
+    // Create object of specified schema
+
+    // Update localStorage with a new user (without removing the previous users)
+});
+
 
 
 
