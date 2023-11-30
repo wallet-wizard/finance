@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 //DOM Declarations
 var amountInput = $('#amount-input');
 var descInput = $('#description-input');
@@ -96,3 +97,5 @@ var currencyInfo = fetch(restCountryAPILink).then(function(response){
 
 // })
 >>>>>>> 497e0f5635c76e7f34fa132cb3e4369c81f5bb4f
+=======
+>>>>>>> a3a4cbcfd6b3dff8ef339cb3ff953e630baff83e
