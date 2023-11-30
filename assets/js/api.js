@@ -71,6 +71,7 @@ function countryDropDownMenu(){
 
     for(var i = 0; i < countryList.length; i++){
         var option = document.createElement("option");
+        option.setAttribute("value", countryList[i])
         var textContent = document.createTextNode(countryList[i]);
         option.appendChild(textContent);
         // ADD ATTRIBUTE FOR EACH COUNTRY
