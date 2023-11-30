@@ -1,20 +1,23 @@
 
+/* dashboard styles */
 section.dashboard div{
-    height: 20vh;
-    background-color: grey;
+    background-color: rgb(172, 172, 172);
 }
 
-section.new-expense div{
-    height: 10vh;
+#dash-info-div{
+    margin: 0 auto;
 }
+
+
+
+
+/* new expense section styles */
+
 
 /* budget section styles */
-.budget-categories{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-section.budget div{
-    height: 50vh;
+
+section.budget{
     max-width: 100%;
+    background-color: rgb(45, 45, 45);
+    color: aliceblue;
 }
