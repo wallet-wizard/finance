@@ -1,4 +1,3 @@
-console.log("I work!");
 
 // SELECTORS
 
@@ -49,15 +48,15 @@ function addNewBlock(div, type, placeholder, symbol) {
 
     // Create Outer Div
     const outerBlock = document.createElement("div");
-    outerBlock.classList.add(`${type}-block`, "row");
+    outerBlock.classList.add(`${type}-block`, "row", "mb-2", "mt-2");
 
     // Create Columns
     const col1 = document.createElement("div");
-    col1.classList.add("col-12", "col-sm-2");
+    col1.classList.add("col-12", "col-sm-6", "p-1");
     const col2 = document.createElement("div");
-    col2.classList.add("col-12", "col-sm-8");
+    col2.classList.add("col-7", "col-sm-3", "p-1");
     const col3 = document.createElement("div");
-    col3.classList.add("col-12", "col-sm-2");
+    col3.classList.add("col-5", "col-sm-3", "p-1");
 
     // Create inputs
     const amountInput = document.createElement("input");
@@ -82,8 +81,8 @@ function addNewBlock(div, type, placeholder, symbol) {
     }
 
     // Append the block
-    col1.append(amountInput);
-    col2.append(descInput);
+    col1.append(descInput);
+    col2.append(amountInput);
     col3.append(freqSelection);
 
     outerBlock.append(col1, col2, col3);

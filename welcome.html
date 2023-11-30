@@ -9,80 +9,91 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <!-- My css -->
     <link rel="stylesheet" href="./assets/css/welcome.css">
+
     <title>Wallet Wizard</title>
 </head>
 
 <body>
 
     <!-- Exterior div -->
-    <div class="container">
+    <div class="container exterior-div mb-5">
 
-        <h1 class="header">Welcome to Wallet wizzard</h1>
+        <div class="container text-center header-div mb-5 pb-3">
+            <h1 class="header display-5">Welcome to</h1>
+            <h1 class="header display-5">Wallet Wizzard!</h1>
+        </div>
 
 
         <!-- FORM -->
         <form id="onboarding-form">
 
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username">
+            <!-- Username -->
+            <div class="mb-5" id="username-div">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username">
+            </div>
 
-
+            <!-- HIDDEN. SHOW only for new user -->
             <div class="new-user" data-display="hidden">
 
                 <!-- Welcome Message -->
-                <h4>Seems like you're a new user. Welcome!</h4>
-                <h5>Please fill in the form below to get started</h5>
+                <div class="text-center pt-5 pb-3 mt-5 mb-5" id="new-user-message">
+                    <p class="p-0 m-0">Seems like you're a new user. Welcome!</p>
+                    <p class="p-0 m-0">Please fill in the form below to get started.</p>
+                </div>
 
-                <!-- Name / Surname -->
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="first-name" placeholder="John">
+                <div class="mb-5" id="basic-info-section">
+                    <!-- Name / Surname -->
+                    <div class="row mb-2">
+                        <div class="col-12 col-sm-6">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="first-name" placeholder="e.g. John">
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <label for="surname">Surname</label>
+                            <input type="text" class="form-control" id="last-name" placeholder="e.g. Smith">
+                        </div>
                     </div>
-                    <div class="col-12 col-sm-6">
-                        <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="last-name" placeholder="Smith">
+                    <!-- Country / Currency -->
+                    <div class="row mb-2">
+                        <div class="col-8 col-sm-6">
+                            <label for="country">Country</label>
+                            <select class="form-control" id="country">
+                                <option>Greece</option>
+                                <option>United Kingdom</option>
+                                <option>...</option>
+                            </select>
+                        </div>
+                        <div class="col-4 col-sm-6">
+                            <label for="currency">Currency</label>
+                            <select class="form-control" id="currency">
+                                <option>EUR</option>
+                                <option>GBP</option>
+                                <option>...</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Country / Currency -->
-                <div class="row">
-                    <div class="col-12 col-sm-6">
-                        <label for="country">Country</label>
-                        <select class="form-control" id="country">
-                            <option>Greece</option>
-                            <option>United Kingdom</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <label for="currency">Currency</label>
-                        <select class="form-control" id="currency">
-                            <option>EUR</option>
-                            <option>GBP</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                </div>
 
                 <!-- DYNAMICALLY UPDATED ELEEMENTS BELOW -->
 
                 <!-- INCOME -->
-                <div class="container mb-2 mt-2 income-section">
+                <div class="container mb-2 mt-2 income-section dynamic-section">
 
                     <p class="">Income</p>
 
 
                     <!-- Updated dynamically -->
-                    <div class="income-blocks">
+                    <div class="income-blocks mb-2 mt-2 ms-0 me-0">
                         <div class="income-block row">
-                            <div class="col-12 col-sm-2">
-                                <input type="text" class="form-control" placeholder="$ Amount">
-                            </div>
-                            <div class="col-12 col-sm-8">
+                            <div class="col-12 col-sm-6 p-1">
                                 <input type="text" class="form-control" placeholder="My Company LTD.">
                             </div>
-                            <div class="col-12 col-sm-2">
+                            <div class="col-7 col-sm-3 p-1">
+                                <input type="text" class="form-control" placeholder="$ Amount">
+                            </div>
+                            <div class="col-5 col-sm-3 p-1">
                                 <select class="form-control">
                                     <option value="2">Monthly</option>
                                     <option value="3">Yearly</option>
@@ -92,30 +103,29 @@
                         </div>
                     </div>
 
-
-                    <!-- Submit Button -->
-                    <button class="btn btn-secondary" type="button" id="add-income">+</button>
-                    <button class="btn btn-secondary" type="button" id="remove-income">-</button>
+                    <!-- + / - Buttons -->
+                    <button class="btn btn-secondary add-remove-btn" type="button" id="add-income">+</button>
+                    <button class="btn btn-secondary add-remove-btn" type="button" id="remove-income">-</button>
                 </div>
 
 
 
                 <!-- BUDGETS -->
-                <div class="container mb-2 mt-2 budget-section">
+                <div class="container mb-2 mt-2 budget-section dynamic-section">
 
                     <p class="">Budgets</p>
 
 
                     <!-- Updated dynamically -->
-                    <div class="budget-blocks">
+                    <div class="budget-blocks mb-2 mt-2">
                         <div class=" budget-block row">
-                            <div class="col-12 col-sm-2">
-                                <input type="text" class="form-control" placeholder="$ Amount">
-                            </div>
-                            <div class="col-12 col-sm-8">
+                            <div class="col-12 col-sm-6 p-1">
                                 <input type="text" class="form-control" placeholder="Groceries">
                             </div>
-                            <div class="col-12 col-sm-2">
+                            <div class="col-7 col-sm-3 p-1">
+                                <input type="text" class="form-control" placeholder="$ Amount">
+                            </div>
+                            <div class="col-5 col-sm-3 p-1">
                                 <select class="form-control">
                                     <option value="2">Monthly</option>
                                     <option value="3">Yearly</option>
@@ -125,15 +135,16 @@
                         </div>
                     </div>
 
-
-                    <!-- Submit Button -->
-                    <button class="btn btn-secondary" type="button" id="add-budget">+</button>
-                    <button class="btn btn-secondary" type="button" id="remove-budget">-</button>
+                    <!-- + / - Buttons -->
+                    <button class="btn btn-secondary add-remove-btn" type="button" id="add-budget">+</button>
+                    <button class="btn btn-secondary add-remove-btn" type="button" id="remove-budget">-</button>
                 </div>
 
 
-
-                <button class="btn btn-primary" type="submit">Submit</button>
+                <!-- SUBMIT form button -->
+                <div class="text-center submit-btn-div m-5">
+                    <button class="btn btn-primary submit-btn" type="submit">Submit</button>
+                </div>
             </div>
         </form>
     </div>
