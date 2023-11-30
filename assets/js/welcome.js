@@ -59,6 +59,75 @@ formDiv.addEventListener('submit', (event) => {
 });
 
 
+/* PROPOSED OBJECT SCHEMA
+let user = {
+    basicInfo: {
+        name: "John",
+        surname: "Smith",
+        regDate: dayjs().format("YYYYMMDD")
+    },
+    preferences: {
+        country: "UK",
+        currency: "GBP"
+    },
+    income: [
+        {
+            desc: "MyComp LTD",
+            amount: 2000,
+            freq: "monthly"
+        },
+        {
+            desc: "Freelance Developer",
+            amount: 300,
+            freq: "weekly"
+        }
+    ],
+    budgets: {
+        mainExp: {
+            cap: 1200,
+            current: 300.00,
+            over: "no"
+        },
+        groceries: {
+            cap: 450,
+            current: 87.00,
+            over: "no"
+        },
+        transport: {
+            cap: 160,
+            current: 167.36,
+            over: "yes"
+        }
+    },
+    fixedExpenses: [
+        {
+            desc: "Travelcard",
+            amount: 157.59,
+            date: "DD",
+            freq: "monthly"
+        },
+        {
+            desc: "Council Tax",
+            amount: 101.00,
+            date: "DD",
+            freq: "monthly"
+        },
+        {
+            desc: "Car Insurance",
+            amount: 200.00,
+            date: "MMDD",
+            freq: "yearly"
+        },
+    ],
+    expenseTracker: [
+        {
+            desc: "..."
+            budgetType: "...",
+            amount: 20,
+        },
+    ]
+}
+*/
 
 
 // FUNCTIONS
