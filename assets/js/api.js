@@ -105,6 +105,37 @@ function addCountriesToDropDown(list){
 
 // Extracting list of currencies from the rest countries API
 
+fetch(allCurrenciesLink).then(function(response){
+
+    return response.json();
+}).then(function (data){
+
+    for (var a = 0; a < data.length; a++){
+        console.log(data)
+        // currencyList.push(data[a].currencies[(data[a].currencies)[0]].name)
+    }
+    currencyList.sort()
+
+    addCurrenciesToDropDown(currencyList)
+
+    return currencyList
+
+})
+
+
+function addCurrenciesToDropDown(list){
+var currencyDiv = document.getElementById("currency");
+
+for(var j = 0; j < currencyList.length; j++){
+    var option = document.createElement("option");
+    option.setAttribute("value", currencyList[j])
+    var textContent = document.createTextNode(currencyList[j]);
+    option.appendChild(textContent);        
+    currencyDiv.appendChild(option);
+}
+
+}
+
 
 
 
