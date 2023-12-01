@@ -1,7 +1,7 @@
 // Function to obtain the country's currency name, code and symbol
 
 // var countrySelection = prompt("Please enter your country of residence")
-var countrySelection = 'Greece';
+var countrySelection = 'Brazil';
 
 var allCountriesLink = "https://restcountries.com/v3.1/all"
 
@@ -78,7 +78,6 @@ function countryDropDownMenu(){
         
         countryDiv.appendChild(option);
     }
-
 }
 
 countryDropDownMenu()
@@ -86,15 +85,15 @@ countryDropDownMenu()
 
 // Function to obtain the exchange rate, based on the country's code
 
-var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + localStorage.getItem('currency-code')
+// var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + localStorage.getItem('currency-code')
 
-fetch(currencyRateLink).then(function(response){
-    return response.json();
-}).then(function (data){
+// fetch(currencyRateLink).then(function(response){
+//     return response.json();
+// }).then(function (data){
 
-    console.log(data)
+//     console.log(data)
 
-})
+// })
 
 
 // var currencyInfo = fetch(currencyRateLink).then(function(response){
