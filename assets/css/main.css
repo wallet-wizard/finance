@@ -1,0 +1,23 @@
+
+/* dashboard styles */
+section.dashboard div{
+    background-color: rgb(172, 172, 172);
+}
+
+#dash-info-div{
+    margin: 0 auto;
+}
+
+
+
+
+/* new expense section styles */
+
+
+/* budget section styles */
+
+section.budget{
+    max-width: 100%;
+    background-color: rgb(45, 45, 45);
+    color: aliceblue;
+}
