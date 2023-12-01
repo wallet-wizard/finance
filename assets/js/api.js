@@ -1,10 +1,6 @@
 // Function to obtain the country's currency name, code and symbol
 
 // var countrySelection = prompt("Please enter your country of residence")
-<<<<<<< HEAD
-var countrySelection = 'Brazil';
-=======
->>>>>>> d729c533eafe83ed8e7520dff45bbe05de156294
 
 var allCountries = "https://restcountries.com/v3.1/all"
 
@@ -108,55 +104,55 @@ function addCountriesToDropDown(list){
 
 // Extracting list of currencies from the rest countries API
 
-fetch(allCurrenciesLink).then(function(response){
+// fetch(allCurrenciesLink).then(function(response){
 
-    return response.json();
-}).then(function (data){
-
-    for (var a = 0; a < data.length; a++){
-        console.log(data)
-        // currencyList.push(data[a].currencies[(data[a].currencies)[0]].name)
-    }
-    currencyList.sort()
-
-    addCurrenciesToDropDown(currencyList)
-
-    return currencyList
-
-})
-
-
-function addCurrenciesToDropDown(list){
-var currencyDiv = document.getElementById("currency");
-
-for(var j = 0; j < currencyList.length; j++){
-    var option = document.createElement("option");
-    option.setAttribute("value", currencyList[j])
-    var textContent = document.createTextNode(currencyList[j]);
-    option.appendChild(textContent);        
-    currencyDiv.appendChild(option);
-}
-
-}
-
-
-
-
-// Function to obtain the exchange rate, based on the country's code
-
-// var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + localStorage.getItem('currency-code')
-
-// fetch(currencyRateLink).then(function(response){
 //     return response.json();
 // }).then(function (data){
 
-//     console.log(data)
+//     for (var a = 0; a < data.length; a++){
+//         console.log(data)
+//         // currencyList.push(data[a].currencies[(data[a].currencies)[0]].name)
+//     }
+//     currencyList.sort()
+
+//     addCurrenciesToDropDown(currencyList)
+
+//     return currencyList
 
 // })
 
 
-// var currencyInfo = fetch(currencyRateLink).then(function(response){
-//     return response.json();
-// }).then(function (data){ 
+// function addCurrenciesToDropDown(list){
+// var currencyDiv = document.getElementById("currency");
 
-// })
+// for(var j = 0; j < currencyList.length; j++){
+//     var option = document.createElement("option");
+//     option.setAttribute("value", currencyList[j])
+//     var textContent = document.createTextNode(currencyList[j]);
+//     option.appendChild(textContent);        
+//     currencyDiv.appendChild(option);
+// }
+
+// }
+
+
+
+
+// // Function to obtain the exchange rate, based on the country's code
+
+// // var currencyRateLink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + localStorage.getItem('currency-code')
+
+// // fetch(currencyRateLink).then(function(response){
+// //     return response.json();
+// // }).then(function (data){
+
+// //     console.log(data)
+
+// // })
+
+
+// // var currencyInfo = fetch(currencyRateLink).then(function(response){
+// //     return response.json();
+// // }).then(function (data){ 
+
+// // })
