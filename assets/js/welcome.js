@@ -16,8 +16,12 @@ const removeIncomeBtn = document.querySelector("#remove-income");
 const removeBudgetBtn = document.querySelector("#remove-budget");
 
 
-const FREQUENCY = ["Monthly", "Weekly", "Yearly"];
+const FREQUENCY = ["Hourly", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly"];
 const USERNAMES = ['dimi92', 'john123', 'eleniG', 'ahmed55'];
+const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
+
+console.log("DATA from LS:", DATA);
+
 
 // EVENT LISTENERS
 
@@ -38,24 +42,27 @@ removeBudgetBtn.addEventListener('click', () => {
 });
 
 
-
 formDiv.addEventListener('submit', (event) => {
 
     //  Prevents default action of submit
     event.preventDefault();
-
-    // Get localStorage stored data
-    
 
     // Check username and see if it exists - go to main page if it does
     const username = document.querySelector("#username").value.trim();
     console.log(username);
     console.log(username.length);
 
-    if (USERNAMES.includes(username)) {
+    // Checks if username exists
+    if (DATA.hasOwnProperty(username)) {
+        console.log(`${username} exists in the object.`);
         console.log("Usernme exists. I will go to main.html");
+
+        // Redirect to main.html
+        // window.location.href = './assets/html/main.html';
+        return; // Stop further execution
     } else {
-        console.log("Username doesn't exist in database.")
+        console.log(`${username} does not exist in the object.`);
+        console.log("New userData created.")
     }
 
     // Evaluate that username has allowed chars - show error messages if not
@@ -67,96 +74,53 @@ formDiv.addEventListener('submit', (event) => {
     const country = document.querySelector("#country").value.trim();
     const currency = document.querySelector("#currency").value.trim();
 
-    console.log(`First name: ${firstName}, Last name: ${lastName}, Country: ${country}, Currency: ${currency}`);
-
     const incomeData = getSectionData(incomeDiv);
-    const budgetData = getSectionData(budgetDiv);
+    const budgetData = getSectionData(budgetDiv, true);
 
+    console.log('')
+    console.log(`=============`)
+    console.log(`USER DATA`)
+    console.log(`---------`)
+    console.log(`First name: ${firstName}`);
+    console.log(`Last name: ${lastName}`);
+    console.log(`Country: ${country}`);
+    console.log(`Currency: ${currency}`);
     console.log(`Income Data: `, incomeData);
     console.log(`Budget Data: `, budgetData);
-    
-    
+    console.log(`=============`)
+    console.log('')
+
     // Check if info is valid / sufficient - alert user if not
     // TCB //
 
     // Create object of specified schema
-    
+    let userData = {
+        basicInfo: {
+            name: firstName,
+            lastName: lastName,
+            username: username
+            // age: null,
+            // sex: null,
+            // regDate: null
+        },
+        preferences: {
+            country: country,
+            currency: currency
+        },
+        income: incomeData,
+        budgets: budgetData,
+    }
 
     // Update localStorage with a new user (without removing the previous users)
+    console.log(userData);
 
+    let currentData = DATA;
+    currentData[username] = userData;
+
+    // console.log("Current Data", currentData);
+    const userDataStringified = JSON.stringify(currentData);
+    localStorage.setItem('walletWizDataSet', userDataStringified);
 });
-
-
-
-
-// let john123 = {
-//     basicInfo: {
-//         name: "John",
-//         surname: "Smith",
-//         regDate: dayjs().format("YYYYMMDD")
-//     },
-//     preferences: {
-//         country: "UK",
-//         currency: "GBP"
-//     },
-//     income: [
-//         {
-//             desc: "MyComp LTD",
-//             amount: 2000,
-//             freq: "monthly"
-//         },
-//         {
-//             desc: "Freelance Developer",
-//             amount: 300,
-//             freq: "weekly"
-//         }
-//     ],
-//     budgets: {
-//         mainExp: {
-//             cap: 1200,
-//             current: 300.00,
-//             over: "no"
-//         },
-//         groceries: {
-//             cap: 450,
-//             current: 87.00,
-//             over: "no"
-//         },
-//         transport: {
-//             cap: 160,
-//             current: 167.36,
-//             over: "yes"
-//         }
-//     },
-//     fixedExpenses: [
-//         {
-//             desc: "Travelcard",
-//             amount: 157.59,
-//             date: "DD",
-//             freq: "monthly"
-//         },
-//         {
-//             desc: "Council Tax",
-//             amount: 101.00,
-//             date: "DD",
-//             freq: "monthly"
-//         },
-//         {
-//             desc: "Car Insurance",
-//             amount: 200.00,
-//             date: "MMDD",
-//             freq: "yearly"
-//         },
-//     ],
-//     expenseTracker: [
-//         {
-//             desc: "..."
-//             budgetType: "...",
-//             amount: 20.00,
-//         },
-//     ]
-// }
-
 
 
 // FUNCTIONS
@@ -181,20 +145,28 @@ function addNewBlock(div, type, placeholder, symbol) {
     descInput.setAttribute("type", "text");
     descInput.setAttribute("placeholder", placeholder);
     descInput.setAttribute("data-type", `desc`);
-    
+
     const amountInput = document.createElement("input");
     amountInput.classList.add("form-control");
     amountInput.setAttribute("type", "text");
     amountInput.setAttribute("placeholder", `${symbol} Amount`);
     amountInput.setAttribute("data-type", `amount`);
-    
+
     const freqSelection = document.createElement("select");
     freqSelection.classList.add("form-control");
     freqSelection.setAttribute("data-type", `freq`);
 
     for (const i in FREQUENCY) {
+        const index = parseInt(i);
+        const valueText = index + 1;
         const optionEl = document.createElement('option');
-        optionEl.setAttribute("value", (i + 1));
+        optionEl.setAttribute("value", valueText);
+
+        // Selects "Monthly"
+        if (valueText == 5) {
+            optionEl.setAttribute("selected", "selected");
+        }
+
         optionEl.innerText = FREQUENCY[i];
 
         freqSelection.append(optionEl)
@@ -210,19 +182,19 @@ function addNewBlock(div, type, placeholder, symbol) {
     div.append(outerBlock);
 }
 
+
 function removeLastChild(element) {
-    console.log("here!")
     let children = element.childElementCount;
     console.log(children)
 
     if (children > 1) {
         let lastChild = element.lastElementChild;
         element.removeChild(lastChild);
-    } 
+    }
 }
 
 
-function getSectionData(parentDiv) {
+function getSectionData(parentDiv, includeOver = false) {
     // Array that will be returned
     let arr = [];
 
@@ -241,10 +213,14 @@ function getSectionData(parentDiv) {
         for (let j = 0; j < count; j++) {
             const type = child.children[j].children[0].dataset.type;
             const value = child.children[j].children[0].value;
-            console.log(type, value);
 
             obj[type] = value;
         }
+
+        if (includeOver) {
+            obj['over'] = 'no';
+        }
+
         arr.push(obj);
     }
 

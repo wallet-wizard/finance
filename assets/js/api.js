@@ -1,6 +1,10 @@
 // Function to obtain the country's currency name, code and symbol
 
 // var countrySelection = prompt("Please enter your country of residence")
+<<<<<<< HEAD
+var countrySelection = 'Brazil';
+=======
+>>>>>>> d729c533eafe83ed8e7520dff45bbe05de156294
 
 var allCountries = "https://restcountries.com/v3.1/all"
 
@@ -99,7 +103,6 @@ function addCountriesToDropDown(list){
         option.appendChild(textContent);        
         countryDiv.appendChild(option);
     }
-
 }
 
 
