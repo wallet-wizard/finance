@@ -104,36 +104,40 @@ function addCountriesToDropDown(list){
 
 // Extracting list of currencies from the rest countries API
 
-// fetch(allCurrenciesLink).then(function(response){
+fetch(allCountries).then(function(response){
 
-//     return response.json();
-// }).then(function (data){
+    return response.json();
+}).then(function (data){
 
-//     for (var a = 0; a < data.length; a++){
-//         console.log(data)
-//         // currencyList.push(data[a].currencies[(data[a].currencies)[0]].name)
-//     }
-//     currencyList.sort()
+    for (var a = 0; a < data.length; a++){
+        var currencyName = data[a].currencies[Object.keys(data[a].currencies)[0]].name
+        var currencySymbol = data[a].currencies[Object.keys(data[a].currencies)[0]].symbol
+        currencyList.push(currencyName + " (" + currencySymbol +")")
+    }
+    currencyList.sort()
 
-//     addCurrenciesToDropDown(currencyList)
+    addCurrenciesToDropDown(currencyList)
 
-//     return currencyList
+    return currencyList
 
-// })
+})
+
+console.log(currencyList)
 
 
-// function addCurrenciesToDropDown(list){
-// var currencyDiv = document.getElementById("currency");
+function addCurrenciesToDropDown(list){
+var currencyDiv = document.getElementById("currency");
 
-// for(var j = 0; j < currencyList.length; j++){
-//     var option = document.createElement("option");
-//     option.setAttribute("value", currencyList[j])
-//     var textContent = document.createTextNode(currencyList[j]);
-//     option.appendChild(textContent);        
-//     currencyDiv.appendChild(option);
-// }
+for(var j = 0; j < currencyList.length; j++){
+    var option = document.createElement("option");
+    option.setAttribute("value", currencyList[j]);
+    var currencyCode = Object.keys(data[0].currencies)[0];
+    var textContent = document.createTextNode(currencyList[j]);
+    option.appendChild(textContent);        
+    currencyDiv.appendChild(option);
+}
 
-// }
+}
 
 
 
