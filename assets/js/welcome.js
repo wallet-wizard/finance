@@ -17,10 +17,10 @@ const removeBudgetBtn = document.querySelector("#remove-budget");
 
 
 const FREQUENCY = ["Hourly", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly"];
-const USERNAMES = ['dimi92', 'john123', 'eleniG', 'ahmed55'];
 const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
 
-console.log("DATA from LS:", DATA);
+
+// console.log("DATA from LS:", DATA);
 
 
 // EVENT LISTENERS
@@ -57,9 +57,10 @@ formDiv.addEventListener('submit', (event) => {
         console.log(`${username} exists in the object.`);
         console.log("Usernme exists. I will go to main.html");
 
-        // Redirect to main.html
-        // window.location.href = './assets/html/main.html';
-        return; // Stop further execution
+        // Update username and redirect to main.html
+        localStorage.setItem('WalletWizUsername', username);
+        window.location.href = './assets/html/main.html';
+        return username; // Stop further execution
     } else {
         console.log(`${username} does not exist in the object.`);
         console.log("New userData created.")
@@ -112,14 +113,17 @@ formDiv.addEventListener('submit', (event) => {
     }
 
     // Update localStorage with a new user (without removing the previous users)
-    console.log(userData);
-
     let currentData = DATA;
     currentData[username] = userData;
 
-    // console.log("Current Data", currentData);
     const userDataStringified = JSON.stringify(currentData);
     localStorage.setItem('walletWizDataSet', userDataStringified);
+
+    // Update USERNAME
+    localStorage.setItem('WalletWizUsername', username);
+
+    // Go to main.html
+    window.location.href = './assets/html/main.html';
 });
 
 
@@ -219,8 +223,9 @@ function getSectionData(parentDiv, includeOver = false) {
 
         if (includeOver) {
             obj['over'] = 'no';
+            obj['currentAmount'] = 0;
         }
-
+        
         arr.push(obj);
     }
 
