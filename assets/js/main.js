@@ -9,6 +9,34 @@ var longDate = dayjs().format('dddd D MMMM YYYY');
 console.log(longDate)
 todaysDate.text(longDate)
 
+
+
+
+
+// GET DATA From localStorage + welcome.html
+console.log('=======');
+console.log('=======');
+
+const currentUser = localStorage.getItem('WalletWizUsername') || null;
+
+// Return to welcome.html if username is not set.
+if (currentUser === null) {
+    window.location.href = '../../welcome.html';
+}
+
+console.log("USERNAME:", currentUser);
+console.log("DATA:", DATA[currentUser]);
+
+// Store DATA
+const basicInfo = DATA[currentUser].basicInfo;
+const budgets = DATA[currentUser].budgets;
+const income = DATA[currentUser].income;
+const preferences = DATA[currentUser].preferences;
+
+
+
+
+// Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
 
 
@@ -32,3 +60,10 @@ newExpenseBtn.on('click', () => {
     console.log(amountInput.val())
     console.log(descInput.val())
 })
+
+
+
+// BUDGETS SECTION
+
+console.log(budgets);
+const budgetInfoDiv = document.querySelector("#budget-information");
