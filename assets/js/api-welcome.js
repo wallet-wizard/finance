@@ -88,14 +88,13 @@ var generateCountryList = fetch(allCountries).then(function(response){
     
     })
 
-
+var countryDiv = document.getElementById("country");
 function addCountriesToDropDown(list){
-    var countryDiv = document.getElementById("country");
-
-    for(var i = 0; i < countryList.length; i++){
+   
+    for(var i = 0; i < list.length; i++){
         var option = document.createElement("option");
-        option.setAttribute("value", countryList[i])
-        var textContent = document.createTextNode(countryList[i]);
+        option.setAttribute("value", list[i])
+        var textContent = document.createTextNode(list[i]);
         option.appendChild(textContent);        
         countryDiv.appendChild(option);
     }
@@ -104,36 +103,64 @@ function addCountriesToDropDown(list){
 
 // Extracting list of currencies from the rest countries API
 
-// fetch(allCurrenciesLink).then(function(response){
+fetch(allCountries).then(function(response){
 
-//     return response.json();
-// }).then(function (data){
+    return response.json();
+}).then(function (data){
 
-//     for (var a = 0; a < data.length; a++){
-//         console.log(data)
-//         // currencyList.push(data[a].currencies[(data[a].currencies)[0]].name)
-//     }
-//     currencyList.sort()
+    for (var b = 0; b < data.length; b++){
+        var currencyName = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].name : ''
+        // var currencySymbol = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].symbol : ''
+        if (data[b].currencies) {
+            currencyList.push(currencyName)
+        }
+        currencyList.sort()
+    }
+    
+    var uniqueCurrencyList = [... new Set(currencyList)]
 
-//     addCurrenciesToDropDown(currencyList)
+    addCurrenciesToDropDown(uniqueCurrencyList)
 
-//     return currencyList
+    return uniqueCurrencyList
 
-// })
+})
+
+var currencyDiv = document.getElementById("currency");
+
+function addCurrenciesToDropDown(list){
+
+for(var j = 0; j < list.length; j++){
+    var option = document.createElement("option");
+    option.setAttribute("value", list[j]);
+    // var currencyCode = Object.keys(data[0].currencies)[0];
+    var textContent = document.createTextNode(list[j]);
+    option.appendChild(textContent);        
+    currencyDiv.appendChild(option);
+}
+
+}
 
 
-// function addCurrenciesToDropDown(list){
-// var currencyDiv = document.getElementById("currency");
 
-// for(var j = 0; j < currencyList.length; j++){
-//     var option = document.createElement("option");
-//     option.setAttribute("value", currencyList[j])
-//     var textContent = document.createTextNode(currencyList[j]);
-//     option.appendChild(textContent);        
-//     currencyDiv.appendChild(option);
-// }
+// Creating a function so that when the user selects their country of residence, the currency is changed their respective country
 
-// }
+countryDiv.addEventListener("change", function(data){
+    fetch(allCountries).then(function(response){
+
+        return response.json();
+    }).then(function (data){
+        for(var c = 0; c < data.length; c++){
+            data[c].currencies ? data[c].currencies[Object.keys(data[c].currencies)[0]].name : ''
+            if (data[c].name.common === countryDiv.value) {
+                currencyDiv.value = data[c].currencies[Object.keys(data[c].currencies)[0]].name
+                // console.log(currencyDiv.value)
+            }
+            }
+        })
+        
+        
+})
+    
 
 
 
