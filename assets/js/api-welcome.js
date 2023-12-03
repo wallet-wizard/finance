@@ -153,7 +153,7 @@ countryDiv.addEventListener("change", function(data){
             data[c].currencies ? data[c].currencies[Object.keys(data[c].currencies)[0]].name : ''
             if (data[c].name.common === countryDiv.value) {
                 currencyDiv.value = data[c].currencies[Object.keys(data[c].currencies)[0]].name
-                console.log(currencyDiv.value)
+                // console.log(currencyDiv.value)
             }
             }
         })
