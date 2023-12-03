@@ -12,20 +12,20 @@ todaysDate.text(longDate)
 
 
 
-// GET USER DATA from localStorage
+// GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
 const currentUser = localStorage.getItem('WalletWizUsername') || null;
 
-// Store DATA
+// Store USER DATA
 const basicInfo = DATA[currentUser].basicInfo;
 const budgets = DATA[currentUser].budgets;
 const income = DATA[currentUser].income;
 const preferences = DATA[currentUser].preferences;
-const CURRENCY_SYMBOL = '$';
+const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
 
 // Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
 const DAYSINMONTH = dayjs().daysInMonth();
-console.log("DAYS IN MONTH: ", DAYSINMONTH);
+// console.log("DAYS IN MONTH: ", DAYSINMONTH);
 
 
 
@@ -42,6 +42,7 @@ startApp();
 
 
 // START APP (MAIN) FUNCTION
+// Runs of page refresh
 
 function startApp() {
 
@@ -50,45 +51,44 @@ function startApp() {
         window.location.href = '../../welcome.html';
     }
 
-    // Refresh Current Amounts if it's 1st of the month, 
+    // Clear Current Amounts if it's 1st of the month, 
     // maybe give report to user before? 
     // TBC //
 
-    console.log("USERNAME:", currentUser);
-    console.log("DATA:", DATA[currentUser]);
+    // console.log("USERNAME:", currentUser);
+    // console.log("DATA:", DATA[currentUser]);
 
 
     // Create Budget Blocks
     const budgetInfoDiv = document.querySelector("#budget-information");
 
     for (const budget of budgets) {
+        // Store data, convert to Numbers
         const budgetDesc = budget.desc;
-        // console.log("budget Desc:", budgetDesc);
         const current = budget.currentAmount.toFixed(2);
-        // console.log("CURRENT:", current);
         const cap = Number(budget.amount);
-        // console.log("CAP:", cap)
         const frequency = Number(budget.freq);
-        // console.log("FREQ:", frequency);
 
-        // Converted amount
+        // Get Converted amount
         const convertedAmount = getRates(cap, frequency, 5);
 
+        //  Create budget-block and append it
         const newBudgetBlock = createBudgetBlock(budgetDesc, current, convertedAmount);
         budgetInfoDiv.append(newBudgetBlock);
     }
     
     
-    //  Get total monthly income
+    //  Get total monthly income (needed to create income percentages)
     let totalMonthlyIncome = 0;
     for (incomeSource of income) {
+        // Store data, convert to Numbers
         const sourceAmount = Number(incomeSource.amount);
         const sourceFrequency = Number(incomeSource.freq);
         const sourceConvertedAmount = getRates(sourceAmount, sourceFrequency, 5);
 
         totalMonthlyIncome += Number(sourceConvertedAmount)
     }
-    console.log("TOTAL MONTHLY INCOME:", totalMonthlyIncome)
+
 
     // Create Income Blocks (responsive)
     const incomeGraphs = document.querySelector(".income-graphs");
@@ -113,22 +113,22 @@ function startApp() {
 //Event listener for 'description' input
 descInput.on('keypress', event => {
     if (event.key === 'Enter') {
-        console.log('hi')
-        console.log(descInput.val());
+        // console.log('hi')
+        // console.log(descInput.val());
     }
 })
 
 //Event listener for 'amount' input
 amountInput.on('keypress', event => {
     if (event.key === 'Enter') {
-        console.log('hi')
-        console.log(amountInput.val());
+        // console.log('hi')
+        // console.log(amountInput.val());
     }
 })
 
 newExpenseBtn.on('click', () => {
-    console.log(amountInput.val())
-    console.log(descInput.val())
+    // console.log(amountInput.val())
+    // console.log(descInput.val())
 
 
     // Update Dashboard Section
@@ -148,25 +148,13 @@ newExpenseBtn.on('click', () => {
 function createBudgetBlock(desc, currentAmount, cap) {
 
     // ** Create Budget-Block (outer container) ** //
-    const budgetBlockRow = document.createElement('div');
-    budgetBlockRow.classList.add(
-        "row",
-        "justify-content-between",
-        "justify-content-md-evenly",
-        "align-items-center",
-        "mb-4", "mt-4",
-        "budget-block")
-
+    const budgetBlockRow = createNewEl("div", ["row", "justify-content-between", "justify-content-md-evenly", "align-items-center", "mb-4", "mt-4", "budget-block"]);
 
     // ** Create Description (1st column) ** //
-    const budgetDesc = document.createElement('h5');
-    budgetDesc.classList.add("col-md-2", "ms-md-2", "me-md-1", "desc");
-    budgetDesc.innerText = desc;
-
+    const budgetDesc = createNewEl("h5", ["col-md-2", "ms-md-2", "me-md-1", "desc"], desc);
 
     // ** Create Graph (2nd column) ** //
-    const graphContainer = document.createElement('div');
-    graphContainer.classList.add("col-md-3", "row", "ps-3", "m-md-3", "p-md-0", "align-items-center", "graph-container");
+    const graphContainer = createNewEl("div", ["col-md-3", "row", "ps-3", "m-md-3", "p-md-0", "align-items-center", "graph-container"])
 
     // Create percentage <span>
     const percentageValue = getPercentage(currentAmount, cap);
@@ -179,6 +167,7 @@ function createBudgetBlock(desc, currentAmount, cap) {
     // Inner Graph Div
     const graphInnerDiv = document.createElement('div');
     graphInnerDiv.classList.add("m-0", "p-0", "inner-graph");
+
 
     // Update inner graph and colours based on percentage
     if (percentageValue > 100) {
@@ -210,8 +199,7 @@ function createBudgetBlock(desc, currentAmount, cap) {
     // Cap Amount Span
     const capAmountSpan = createNewEl("span", ["number", "cap-amount-num"], cap);
     //  Divider && Symbol Spans
-    const dividerSymbol = ` / `;
-    const dividerSpan = createNewEl("span", ["divider", "with-space"], dividerSymbol);
+    const dividerSpan = createNewEl("span", ["divider", "with-space"], "/");
     const symbolSpan1 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
     const symbolSpan2 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
 
@@ -256,9 +244,9 @@ function createIncomeGraph(desc, amount, total) {
         return;
     }
 
-    console.log("Amount:", amount);
-    const perc = getIncomePercentage(amount, total);
-    console.log("PERCENTAGE:", perc);
+    // console.log("Amount:", amount);
+    const perc = getPercentage(amount, total);
+    // console.log("PERCENTAGE:", perc);
 
     // Graph
     const outerGraph = createNewEl("div", "income-outer-graph");
@@ -392,17 +380,4 @@ function getCurrentYearDays() {
     }
 
     return daysCount;
-}
-
-// 5. Get percentage
-function getIncomePercentage(amount, total) {
-    if (total === 0) {
-        // To avoid division by zero, return an error or handle accordingly
-        return "Error: Division by zero";
-    }
-
-    const percentage = (amount / total) * 100;
-    const roundedPercentage = Math.round(percentage);
-
-    return roundedPercentage;
 }
