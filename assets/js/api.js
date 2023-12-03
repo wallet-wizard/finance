@@ -109,30 +109,33 @@ fetch(allCountries).then(function(response){
     return response.json();
 }).then(function (data){
 
-    for (var a = 0; a < data.length; a++){
-        var currencyName = data[a].currencies[Object.keys(data[a].currencies)[0]].name
-        var currencySymbol = data[a].currencies[Object.keys(data[a].currencies)[0]].symbol
-        currencyList.push(currencyName + " (" + currencySymbol +")")
+    for (var b = 0; b < data.length; b++){
+        var currencyName = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].name : ''
+        // var currencySymbol = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].symbol : ''
+        if ( data[b].currencies ) {
+            currencyList.push(currencyName)
+        }
+        currencyList.sort()
     }
-    currencyList.sort()
+    
+    var uniqueCurrencyList = [... new Set(currencyList)]
 
-    addCurrenciesToDropDown(currencyList)
+    addCurrenciesToDropDown(uniqueCurrencyList)
 
-    return currencyList
+    return uniqueCurrencyList
 
 })
 
-console.log(currencyList)
 
 
 function addCurrenciesToDropDown(list){
 var currencyDiv = document.getElementById("currency");
 
-for(var j = 0; j < currencyList.length; j++){
+for(var j = 0; j < list.length; j++){
     var option = document.createElement("option");
-    option.setAttribute("value", currencyList[j]);
-    var currencyCode = Object.keys(data[0].currencies)[0];
-    var textContent = document.createTextNode(currencyList[j]);
+    option.setAttribute("value", list[j]);
+    // var currencyCode = Object.keys(data[0].currencies)[0];
+    var textContent = document.createTextNode(list[j]);
     option.appendChild(textContent);        
     currencyDiv.appendChild(option);
 }
