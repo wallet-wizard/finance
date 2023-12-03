@@ -1,3 +1,0 @@
-// Creating section for currency exchange rates and submit button
-
-var bodyElement = document.querySelector('body')
