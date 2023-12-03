@@ -13,6 +13,7 @@
 
 <body>
 
+    
     <!-- Dashboard section -->
     <section class="dashboard">
         <div class="container-fluid">
@@ -35,6 +36,8 @@
             </div>
         </div>
     </section>
+
+
 
     <!-- New expense section -->
     <section class="new-expense bg-secondary">
@@ -61,47 +64,49 @@
         </div>
     </section>
 
+
+
     <!-- Budget section -->
     <section class="budget">
-        <div class="container-fluid">
-            <h3 class="text-center pt-3">Budgets</h3>
+        <div class="pt-5 pb-5 container-fluid">
+            <h3 class="display-5 text-center pt-3">December 2023</h3>
 
-            <div id="budget-information">
+            <!-- *** INCOME INFO *** -->
+            <div class="mb-3 mt-3" id="income-information">
 
-                <!-- BUDGET-BLOCK - DYNAMICALLY CREATED from main.js (see structure below)-->
+                <!-- INCOME-BLOCKS -->
+                <div class="m-md-5 container-fluid row align-items-center mb-2">
 
-                <!-- <div
-                    class="row justify-content-between justify-content-md-evenly align-items-center mb-4 mt-4 budget-block">
-
-                    <h5 class="col-md-2 desc">Groceries</h5>
-
-                    <div class="col-md-4 row ps-3 p-md-0 align-items-center graph-container">
-                        <div class="col-9 m-0 p-0 outer-graph">
-                            <div class="m-0 p-0 inner-graph">
-                            </div>
-                        </div>
-                        <span class="col-3 percentage">20%</span>
+                    <div class="col-5 col-md-6 p-0 dynamic-income-info income-graphs">
+                        <!-- Income Graph DYNAMICALLY CREATED -->
                     </div>
 
-                    <div class="col col-md-6 row justify-content-between details-container">
-
-                        <p class="col-6 m-0 d-flex align-items-center amount-container">
-
-                            <span class="currency-symbol">$</span>
-                            <span class="number current-amount-num">130</span>
-
-                            <span class="divider">/</span>
-                            <span class="currency-symbol">$</span>
-                            <span class="number cap-amount-num">2000</span>
+                    <!-- INCOME Details -->
+                    <div class="col-7 col-md-6 text-center">
+                        <h5 class="header">TOTAL INCOME</h5>
+                        <p class="total-income">
+                            <span>Income:</span>
+                            <span>$</span>
+                            <span>2000</span>
                         </p>
-
-                        <div class="col-6 d-flex justify-content-end">
-                            <button class="btn btn-secondary add-remove-btn">+</button>
-                        </div>
+                        <p class="total-income">
+                            <span>Spend:</span>
+                            <span>$</span>
+                            <span>2000</span>
+                        </p>
                     </div>
-                </div> -->
-                
+
+                </div>
+
             </div>
+
+
+            <!-- *** BUDGET INFO *** -->
+            <div class="mt-5" id="budget-information">
+                <!-- BUDGET-BLOCKS - DYNAMICALLY CREATED from main.js (see structure below)-->
+            </div>
+
+
         </div>
         </div>
     </section>
