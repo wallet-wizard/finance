@@ -88,14 +88,13 @@ var generateCountryList = fetch(allCountries).then(function(response){
     
     })
 
-
+var countryDiv = document.getElementById("country");
 function addCountriesToDropDown(list){
-    var countryDiv = document.getElementById("country");
-
-    for(var i = 0; i < countryList.length; i++){
+   
+    for(var i = 0; i < list.length; i++){
         var option = document.createElement("option");
-        option.setAttribute("value", countryList[i])
-        var textContent = document.createTextNode(countryList[i]);
+        option.setAttribute("value", list[i])
+        var textContent = document.createTextNode(list[i]);
         option.appendChild(textContent);        
         countryDiv.appendChild(option);
     }
@@ -112,7 +111,7 @@ fetch(allCountries).then(function(response){
     for (var b = 0; b < data.length; b++){
         var currencyName = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].name : ''
         // var currencySymbol = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].symbol : ''
-        if ( data[b].currencies ) {
+        if (data[b].currencies) {
             currencyList.push(currencyName)
         }
         currencyList.sort()
@@ -126,10 +125,9 @@ fetch(allCountries).then(function(response){
 
 })
 
-
+var currencyDiv = document.getElementById("currency");
 
 function addCurrenciesToDropDown(list){
-var currencyDiv = document.getElementById("currency");
 
 for(var j = 0; j < list.length; j++){
     var option = document.createElement("option");
@@ -141,6 +139,28 @@ for(var j = 0; j < list.length; j++){
 }
 
 }
+
+
+
+// Creating a function so that when the user selects their country of residence, the currency is changed their respective country
+
+countryDiv.addEventListener("change", function(data){
+    fetch(allCountries).then(function(response){
+
+        return response.json();
+    }).then(function (data){
+        for(var c = 0; c < data.length; c++){
+            data[c].currencies ? data[c].currencies[Object.keys(data[c].currencies)[0]].name : ''
+            if (data[c].name.common === countryDiv.value) {
+                currencyDiv.value = data[c].currencies[Object.keys(data[c].currencies)[0]].name
+                console.log(currencyDiv.value)
+            }
+            }
+        })
+        
+        
+})
+    
 
 
 
