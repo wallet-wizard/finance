@@ -119,7 +119,7 @@ fetch(allCountries).then(function(response){
     
     var uniqueCurrencyList = [... new Set(currencyList)]
 
-    addCurrenciesToDropDown(uniqueCurrencyList)
+    addCurrenciesToDropDown(uniqueCurrencyList, currencyDiv)
 
     return uniqueCurrencyList
 
@@ -127,7 +127,7 @@ fetch(allCountries).then(function(response){
 
 var currencyDiv = document.getElementById("currency");
 
-function addCurrenciesToDropDown(list){
+function addCurrenciesToDropDown(list, pageSection){
 
 for(var j = 0; j < list.length; j++){
     var option = document.createElement("option");
@@ -135,7 +135,7 @@ for(var j = 0; j < list.length; j++){
     // var currencyCode = Object.keys(data[0].currencies)[0];
     var textContent = document.createTextNode(list[j]);
     option.appendChild(textContent);        
-    currencyDiv.appendChild(option);
+    pageSection.appendChild(option);
 }
 
 }
