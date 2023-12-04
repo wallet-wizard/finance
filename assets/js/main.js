@@ -15,6 +15,10 @@ todaysDate.text(longDate)
 // GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
 const currentUser = localStorage.getItem('WalletWizUsername') || null;
 
+// USER DATA LOG (for testing / checking)
+console.log("Current User:", currentUser);
+console.log("DATA", DATA[currentUser]);
+
 // Store USER DATA
 const basicInfo = DATA[currentUser].basicInfo;
 const budgets = DATA[currentUser].budgets;
@@ -65,7 +69,10 @@ function startApp() {
     for (const budget of budgets) {
         // Store data, convert to Numbers
         const budgetDesc = budget.desc;
-        const current = budget.currentAmount.toFixed(2);
+        let current = 0;
+        if (!isNaN(Number(budget.currentAmount))) {
+            current = Number(budget.currentAmount).toFixed(2);
+        }
         const cap = Number(budget.amount);
         const frequency = Number(budget.freq);
 
