@@ -6,6 +6,7 @@ const firstNameEl = document.querySelector("#first-name");
 const lastNameEl = document.querySelector("#last-name");
 const countryEl = document.querySelector("#country");
 const currencyEl = document.querySelector("#currency");
+const newUserBlock = document.querySelector(".new-user-block");
 
 const incomeDiv = document.querySelector(".income-blocks");
 const budgetDiv = document.querySelector(".budget-blocks");
@@ -42,6 +43,16 @@ removeBudgetBtn.addEventListener('click', () => {
 });
 
 
+const storedUsername = localStorage.getItem('WalletWizUsername') || null;
+// Display name in field if username exist
+if (storedUsername !== null) {
+    console.log("here!")
+    usernameEl.value = storedUsername;
+}
+
+
+// *** FORM SUBMISSION *** //
+
 formDiv.addEventListener('submit', (event) => {
 
     //  Prevents default action of submit
@@ -62,8 +73,17 @@ formDiv.addEventListener('submit', (event) => {
         window.location.href = './assets/html/main.html';
         return username; // Stop further execution
     } else {
-        console.log(`${username} does not exist in the object.`);
-        console.log("New userData created.")
+        const staging = localStorage.getItem('WWuserStaging') || "";
+
+        if (staging === username) {
+            console.log(`${username} does not exist in the object.`);
+            console.log("Proceed.")
+        } else {
+            localStorage.setItem('WWuserStaging', username);
+            toggleNewUserVisibility();
+            return;
+            
+        }
     }
 
     // Evaluate that username has allowed chars - show error messages if not
@@ -230,4 +250,18 @@ function getSectionData(parentDiv, includeOver = false) {
     }
 
     return arr;
+}
+
+function toggleNewUserVisibility() {
+    const value = newUserBlock.dataset.display
+
+    if (value === "show") {
+        newUserBlock.classList.add('hidden');
+        newUserBlock.dataset.display = "hidden"
+    }
+    
+    if (value === "hidden") {
+        newUserBlock.classList.remove('hidden');
+        newUserBlock.dataset.display = "show"
+    }
 }

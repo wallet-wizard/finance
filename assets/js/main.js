@@ -11,6 +11,7 @@ todaysDate.text(longDate)
 
 
 
+// ============ USER DATA ============= //
 
 // GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
 const currentUser = localStorage.getItem('WalletWizUsername') || null;
@@ -19,12 +20,23 @@ const currentUser = localStorage.getItem('WalletWizUsername') || null;
 console.log("Current User:", currentUser);
 console.log("DATA", DATA[currentUser]);
 
+// Return to welcome.html if username is not set.
+if (currentUser === null) {
+    console.log("here");
+    window.location.href = '../../welcome.html';
+} else if (currentUser !== DATA[currentUser].basicInfo.username) {
+    window.location.href = '../../welcome.html';
+}
+
 // Store USER DATA
 const basicInfo = DATA[currentUser].basicInfo;
 const budgets = DATA[currentUser].budgets;
 const income = DATA[currentUser].income;
 const preferences = DATA[currentUser].preferences;
 const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
+
+// ================================== //
+
 
 // Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
@@ -35,14 +47,11 @@ const DAYSINMONTH = dayjs().daysInMonth();
 
 
 
-// ===== START APP ======= //
+// ====== START APP ====== //
 
 startApp();
 
 // ======================= //
-
-
-
 
 
 // START APP (MAIN) FUNCTION
@@ -50,17 +59,9 @@ startApp();
 
 function startApp() {
 
-    // Return to welcome.html if username is not set.
-    if (currentUser === null) {
-        window.location.href = '../../welcome.html';
-    }
-
     // Clear Current Amounts if it's 1st of the month, 
     // maybe give report to user before? 
     // TBC //
-
-    // console.log("USERNAME:", currentUser);
-    // console.log("DATA:", DATA[currentUser]);
 
 
     // Create Budget Blocks
@@ -117,6 +118,8 @@ function startApp() {
 }
 
 
+
+
 //Event listener for 'description' input
 descInput.on('keypress', event => {
     if (event.key === 'Enter') {
@@ -157,8 +160,10 @@ function createBudgetBlock(desc, currentAmount, cap) {
     // ** Create Budget-Block (outer container) ** //
     const budgetBlockRow = createNewEl("div", ["row", "justify-content-between", "justify-content-md-evenly", "align-items-center", "mb-4", "mt-4", "budget-block"]);
 
+
     // ** Create Description (1st column) ** //
     const budgetDesc = createNewEl("h5", ["col-md-2", "ms-md-2", "me-md-1", "desc"], desc);
+
 
     // ** Create Graph (2nd column) ** //
     const graphContainer = createNewEl("div", ["col-md-3", "row", "ps-3", "m-md-3", "p-md-0", "align-items-center", "graph-container"])
@@ -175,7 +180,6 @@ function createBudgetBlock(desc, currentAmount, cap) {
     const graphInnerDiv = document.createElement('div');
     graphInnerDiv.classList.add("m-0", "p-0", "inner-graph");
 
-
     // Update inner graph and colours based on percentage
     if (percentageValue > 100) {
         graphInnerDiv.setAttribute("style", `width: 100%; background-color: red`)
@@ -187,7 +191,6 @@ function createBudgetBlock(desc, currentAmount, cap) {
     else {
         graphInnerDiv.setAttribute("style", `width: ${percentageValue}%`)
     }
-
 
     // Append Inner Graph to Outer
     graphOuterDiv.append(graphInnerDiv);
@@ -311,6 +314,7 @@ function getPercentage(a, b) {
 // 3. Convert to monthly budget
 function getRates(amount, currentFreq, newFreq=5, workHours=8) {
     const dayHours = 24;
+    const week = 7;
     const daysOfCurrentYear = getCurrentYearDays();
     let dailyAmount = 0;
 
@@ -324,10 +328,10 @@ function getRates(amount, currentFreq, newFreq=5, workHours=8) {
             dailyAmount = amount;
             break;
         case 3:
-            dailyAmount = amount / 7;
+            dailyAmount = amount / week;
             break;
         case 4:
-            dailyAmount = amount / 14;
+            dailyAmount = amount / (week * 2);
             break;
         case 5:
             dailyAmount = amount / DAYSINMONTH;
@@ -343,8 +347,8 @@ function getRates(amount, currentFreq, newFreq=5, workHours=8) {
     // Convert
     let hourly = dailyAmount / workHours;
     let daily = dailyAmount;
-    let weekly = dailyAmount * 7;
-    let biWeekly = dailyAmount * 14;
+    let weekly = dailyAmount * week;
+    let biWeekly = dailyAmount * (week * 2);
     let monthly = dailyAmount * DAYSINMONTH;
     let yearly = dailyAmount * daysOfCurrentYear;
 
