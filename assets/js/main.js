@@ -11,31 +11,32 @@ todaysDate.text(longDate)
 
 // GLOBAL CONSTS
 const budgetModal = document.querySelector("#budget-modal");
+const bootstrapModal = new bootstrap.Modal(budgetModal);
 
 
 
 // ============ USER DATA ============= //
 
 // GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
-const currentUser = localStorage.getItem('WalletWizUsername') || null;
+const CURRENT_USER = localStorage.getItem('WalletWizUsername') || null;
 
 // USER DATA LOG (for testing / checking)
-console.log("Current User:", currentUser);
-console.log("DATA", DATA[currentUser]);
+console.log("Current User:", CURRENT_USER);
+console.log("DATA", DATA[CURRENT_USER]);
 
 // Return to welcome.html if username is not set.
-if (currentUser === null) {
+if (CURRENT_USER === null) {
     console.log("here");
     window.location.href = '../../welcome.html';
-} else if (currentUser !== DATA[currentUser].basicInfo.username) {
+} else if (CURRENT_USER !== DATA[CURRENT_USER].basicInfo.username) {
     window.location.href = '../../welcome.html';
 }
 
 // Store USER DATA
-const basicInfo = DATA[currentUser].basicInfo;
-const budgets = DATA[currentUser].budgets;
-const income = DATA[currentUser].income;
-const preferences = DATA[currentUser].preferences;
+const basicInfo = DATA[CURRENT_USER].basicInfo;
+const budgets = DATA[CURRENT_USER].budgets;
+const income = DATA[CURRENT_USER].income;
+const preferences = DATA[CURRENT_USER].preferences;
 const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
 
 // ================================== //
@@ -160,34 +161,50 @@ newExpenseBtn.on('click', () => {
 // ** Code adopted from bootstrap 5 - Modals
 
 budgetModal.addEventListener('show.bs.modal', event => {
+
     // Button that triggered the modal
     const button = event.relatedTarget
+
     // Extract info from data-bs-id attributes
     const budgetID = button.getAttribute('data-bs-id');
 
-    // console.log("Budget ID:", budgetID);
+    // Change default budget type selection
+    const budgetDefaultSelection = document.querySelector("#budget-modal-default-option");
+    budgetDefaultSelection.value = budgetID;
+    budgetDefaultSelection.innerText = budgetID;
 
     currentBudget = {};
     for (type of budgets) {
         if (type.desc === budgetID) {
-            // console.log(type)
             currentBudget = type;
         }
     }
     console.log("Current Budget:", currentBudget);
 
-    // WORKING ON THAT NOW //
+    const budgetTypeEl = document.querySelector(".budget-type");
+    budgetTypeEl.innerText = budgetID;
 
-    // Update the modal's content
-    // const modalTitle = exampleModal.querySelector('.modal-title');
-    // const modalBodyInput = exampleModal.querySelector('.modal-body input');
-
-    // modalTitle.textContent = `New message to ${id}`;
-    // modalBodyInput.value = id;
-  })
-
+    
+    
+    
+    const budgetModalBtn = document.querySelector("#submit-modal-btn");
+    console.log(budgetModalBtn);
+    budgetModalBtn.addEventListener('click', (event) => {
 
 
+        console.log(event);
+
+        const desc = document.querySelector("#budget-modal-expense-desc").value;
+        const amount = document.querySelector("#budget-modal-expense-amount").value;
+        const type = document.querySelector("#budget-modal-expense-type").value;
+
+        addExpense(desc, amount, type);
+        console.log("Submitted!!")
+
+        bootstrapModal.hide();
+    });
+    
+});
 
 // ================================== //
 
@@ -436,4 +453,67 @@ function getCurrentYearDays() {
     }
 
     return daysCount;
+}
+
+
+// Add expense to USER DATA
+function addExpense(desc, amount, budgetType) {
+
+    const budgetBlocks = document.querySelectorAll(".budget-block");
+
+    console.log("Inside addExpense()");
+    let localStorageData = DATA;
+    console.log(localStorageData);
+
+    let newExpense = {
+        desc: desc,
+        amount: amount,
+        type: budgetType,
+        logDate: dayjs().format('YYYYMMDD-HHmmss')
+    }
+
+    if (localStorageData[CURRENT_USER].hasOwnProperty("expenses")) {
+        localStorageData[CURRENT_USER]["expenses"].push(newExpense);
+    } else {
+        localStorageData[CURRENT_USER]["expenses"] = [];
+        localStorageData[CURRENT_USER]["expenses"].push(newExpense);
+    }
+
+    let newBudgets = budgets;
+    console.log("NEW BUDGETS:", newBudgets);
+
+    for (const i in budgets) {
+        if (budgets[i].desc === budgetType) {
+            console.log("FOUND BUDGET:", budgets[i]);
+            let previousAmount = Number(budgets[i].currentAmount);
+            let newAmount = previousAmount + Number(amount);
+            newBudgets[i].currentAmount = newAmount;
+
+            if (newAmount > budgets[i].amount) {
+                newBudgets[i].over = "yes";
+            }
+
+            localStorageData[CURRENT_USER].budgets = newBudgets;
+
+            // Update html without refreshing
+            budgetBlocks.forEach(budgetBlock => {
+                console.log("for each");
+                const h5Element = budgetBlock.querySelector("h5");
+                
+                if (h5Element && h5Element.innerText.trim() === budgetType) {
+                    console.log("found!")
+                    const currentAmountEl = document.querySelector(".current-amount-num");
+                    console.log(currentAmountEl);
+                    currentAmountEl.innerText = localStorageData[CURRENT_USER].budgets[i].currentAmount;
+                }
+            });
+
+        }
+    }
+    
+
+    // Update localStorage
+    const stringifiedData = JSON.stringify(localStorageData);
+    localStorage.setItem("walletWizDataSet", stringifiedData);
+    console.log("DONE!");
 }
