@@ -30,18 +30,22 @@ fetch(allCountries).then(function(response){
     addCurrenciesToDropDown(sortedListOfCountries)
 })
 
-
 function addCurrenciesToDropDown(list){
-    var countriesWithValidCurrencies = list.filter(item => item.currency)
+    var countriesWithValidCurrencies = list
+        .filter(item => item.currency)
+        .filter((item, index, arr) => index === arr.findIndex(l => l.currency.name === item.currency.name))
+        .sort((a, b) => a.currency.name > b.currency.name ? 1 : -1)
 
     for(var j = 0; j < countriesWithValidCurrencies.length; j++){
         var option = document.createElement("option");
         option.setAttribute("value", countriesWithValidCurrencies[j].currency.code);
-        var textContent = document.createTextNode(`${countriesWithValidCurrencies[j].name} (${countriesWithValidCurrencies[j].currency.name})`);
+        var textContent = document.createTextNode(countriesWithValidCurrencies[j].currency.name);
         option.appendChild(textContent);        
         currencyExchangeDropDown.appendChild(option);
     }
+
 }
+
 
 var currencySubmitButton = document.getElementById("currency-exchange-button")
 
