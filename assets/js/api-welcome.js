@@ -2,11 +2,7 @@
 
 // var countrySelection = prompt("Please enter your country of residence")
 
-var allCountries = "https://restcountries.com/v3.1/all"
-
-var allCountriesNamesLink = "https://restcountries.com/v3.1/all?fields=name"
-
-var allCurrenciesLink = "https://restcountries.com/v3.1/all?fields=currencies"
+var allCountries = "https://restcountries.com/v3.1/all?fields=name,currencies"
 
 // var restCountryAPILink = "https://restcountries.com/v3.1/name/" + country
 
@@ -104,39 +100,72 @@ function addCountriesToDropDown(list){
 // Extracting list of currencies from the rest countries API
 
 fetch(allCountries).then(function(response){
+    return response.json()
+}).then(res => {
+    var countriesWithCurrencies = res.map(country => {
+        var currencyCode = Object.keys(country.currencies)
 
-    return response.json();
-}).then(function (data){
-
-    for (var b = 0; b < data.length; b++){
-        var currencyName = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].name : ''
-        // var currencySymbol = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].symbol : ''
-        if (data[b].currencies) {
-            currencyList.push(currencyName)
+        return {
+            name: country.name.common,
+            currency: currencyCode.length !== 0 ? {
+                name: country.currencies[currencyCode[0]].name,
+                symbol: country.currencies[currencyCode[0]].symbol,
+                code: currencyCode[0]
+            } : null
         }
-        currencyList.sort()
-    }
-    
-    var uniqueCurrencyList = [... new Set(currencyList)]
+    })
 
-    addCurrenciesToDropDown(uniqueCurrencyList, currencyDiv)
+    var sortedListOfCountries = countriesWithCurrencies.sort((a, b) => a.name > b.name ? 1 : -1)
 
-    return uniqueCurrencyList
-
+    addCurrenciesToDropDown(sortedListOfCountries)
 })
+
+// fetch(allCountries).then(function(response){
+
+//     return response.json();
+// }).then(function (data){
+
+//     for (var b = 0; b < data.length; b++){
+//         var currencyName = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].name : ''
+//         // var currencySymbol = data[b].currencies ? data[b].currencies[Object.keys(data[b].currencies)[0]].symbol : ''
+//         if (data[b].currencies) {
+//             currencyList.push(currencyName)
+//         }
+//         currencyList.sort()
+//     }
+    
+//     var uniqueCurrencyList = [... new Set(currencyList)]
+
+//     addCurrenciesToDropDown(uniqueCurrencyList, currencyDiv, data)
+
+//     return uniqueCurrencyList
+
+// })
 
 var currencyDiv = document.getElementById("currency");
 
-function addCurrenciesToDropDown(list, pageSection){
+function addCurrenciesToDropDown(list){
 
-for(var j = 0; j < list.length; j++){
-    var option = document.createElement("option");
-    option.setAttribute("value", list[j]);
-    // var currencyCode = Object.keys(data[0].currencies)[0];
-    var textContent = document.createTextNode(list[j]);
-    option.appendChild(textContent);        
-    pageSection.appendChild(option);
-}
+    var countriesWithValidCurrencies = list.filter(item => item.currency)
+
+    for(var j = 0; j < countriesWithValidCurrencies.length; j++){
+        var option = document.createElement("option");
+        option.setAttribute("value", countriesWithValidCurrencies[j].currency.code);
+        var textContent = document.createTextNode(`${countriesWithValidCurrencies[j].name} (${countriesWithValidCurrencies[j].currency.name})`);
+        option.appendChild(textContent);        
+        currencyDiv.appendChild(option);
+    }
+
+
+// for(var j = 0; j < list.length; j++){
+//     var option = document.createElement("option");
+//     option.setAttribute("value", list[j]);
+//     // var currencyCode = Object.keys(data[0].currencies)[0];
+//     var textContent = document.createTextNode(list[j]);
+//     option.appendChild(textContent);        
+//     pageSection.appendChild(option);
+//     // currencyDiv.setAttribute('data-currency-code', Object.keys(data[c].currencies)[0])
+// }
 
 }
 
@@ -146,19 +175,17 @@ for(var j = 0; j < list.length; j++){
 
 countryDiv.addEventListener("change", function(data){
     fetch(allCountries).then(function(response){
-
         return response.json();
     }).then(function (data){
+        // console.log({data})
         for(var c = 0; c < data.length; c++){
             data[c].currencies ? data[c].currencies[Object.keys(data[c].currencies)[0]].name : ''
             if (data[c].name.common === countryDiv.value) {
                 currencyDiv.value = data[c].currencies[Object.keys(data[c].currencies)[0]].name
-                // console.log(currencyDiv.value)
+                currencyDiv.setAttribute('data-currency-code', Object.keys(data[c].currencies)[0])
             }
-            }
-        })
-        
-        
+        }
+    })
 })
     
 
