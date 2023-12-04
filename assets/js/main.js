@@ -9,6 +9,9 @@ var longDate = dayjs().format('dddd D MMMM YYYY');
 todaysDate.text(longDate)
 
 
+// GLOBAL CONSTS
+const budgetModal = document.querySelector("#budget-modal");
+
 
 
 // ============ USER DATA ============= //
@@ -120,6 +123,10 @@ function startApp() {
 
 
 
+// ================================== //
+
+// EVENT LISTENERS //
+
 //Event listener for 'description' input
 descInput.on('keypress', event => {
     if (event.key === 'Enter') {
@@ -145,6 +152,39 @@ newExpenseBtn.on('click', () => {
     // TBC //
 
 })
+
+
+
+// BUDGET-MODAL
+
+// ** Code adopted from bootstrap 5 - Modals
+
+budgetModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-id attributes
+    const budgetID = button.getAttribute('data-bs-id');
+
+    // console.log("Budget ID:", budgetID);
+
+    currentBudget = {};
+    for (type of budgets) {
+        if (type.desc === budgetID) {
+            // console.log(type)
+            currentBudget = type;
+        }
+    }
+    console.log("Current Budget:", currentBudget);
+
+    // WORKING ON THAT NOW //
+
+    // Update the modal's content
+    // const modalTitle = exampleModal.querySelector('.modal-title');
+    // const modalBodyInput = exampleModal.querySelector('.modal-body input');
+
+    // modalTitle.textContent = `New message to ${id}`;
+    // modalBodyInput.value = id;
+  })
 
 
 
@@ -220,6 +260,11 @@ function createBudgetBlock(desc, currentAmount, cap) {
     // Create button Container
     const modifyBtnContainer = createNewEl("div", ["col-6", "d-flex", "justify-content-end"]);
     const modifyBtn = createNewEl("button", ["btn", "btn-secondary", "add-remove-btn"], "+");
+    modifyBtn.setAttribute("type", "button");
+    modifyBtn.setAttribute("data-bs-toggle", "modal");
+    modifyBtn.setAttribute("data-bs-target", "#budget-modal");
+    modifyBtn.setAttribute("data-bs-id", desc);
+
     modifyBtnContainer.append(modifyBtn);
 
 
