@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/main.css">
     <title>Dashboard</title>
 </head>
+
+
 <body>
 
     <!-- Dashboard section -->
     <section class="dashboard">
         <div class="container-fluid">
             <h3 id="todays-date" class="text-center py-3"></h3>
-            
             <div class="row">
-                
                 <div class="col-md-6">
                     <h4 id="dashboard-month" class="text-center"></h4>
 
@@ -25,7 +28,6 @@
                         <p>Expenses: <span id="dash-expenses"></span></p>
                         <p>Savings: <span id="dash-savings"></span></p>
                     </div>
-                 
                 </div>
 
                 <div class="col-md-6">
@@ -36,33 +38,104 @@
         </div>
     </section>
 
+
     <!-- New expense section -->
     <section class="new-expense bg-secondary">
         <div class="container-fluid">
             <div class="row py-3" id="new-expense-container">
-                <div class="header-wrapper col-md-3"><p class="text-white">New expense/income:</p></div>
-                <div class="amount-wrapper col-md-2 px-3"><input class="form-control" type="text" placeholder="Amount" id="amount-input" aria-label="default input"></div>
-                <div class="description-wrapper col-md-3"><input class="form-control" type="text" placeholder="Short Description" id="description-input" aria-label="default input"></div>
+                <div class="header-wrapper col-md-3">
+                    <p class="text-white">New expense/income:</p>
+                </div>
+                <div class="amount-wrapper col-md-2 px-3"><input class="form-control" type="text" placeholder="Amount"
+                        id="amount-input" aria-label="default input"></div>
+                <div class="description-wrapper col-md-3"><input class="form-control" type="text"
+                        placeholder="Short Description" id="description-input" aria-label="default input"></div>
                 <div class="dropdown-wrapper col-md-2">
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Expense type</option>
                         <option value="1">Grocery</option>
                         <option value="2">Transport</option>
                         <option value="3">Entertainment</option>
-                      </select>
+                    </select>
+                    </select>
                 </div>
-                <div class="button-wrapper col-md-1"><input class="btn btn-primary" type="submit" value="Submit" id="new-expense-submit"></div>
-        </div>
+                <div class="button-wrapper col-md-1"><input class="btn btn-primary" type="submit" value="Submit"
+                        id="new-expense-submit"></div>
+            </div>
         </div>
     </section>
 
+
     <!-- Budget section -->
     <section class="budget">
-        <div class="container-fluid">
-        <h3 class="text-center pt-3">Budgets</h3>
+        <div class="pt-5 pb-5 container-fluid">
 
-        <div id="budget-information"></div>
-    </div>
+            <!--  -->
+            <h3 class="display-5 text-center pt-3">Overview</h3>
+
+            <!-- *** INCOME INFO *** -->
+            <div class="m-3 pt-2 m-md-5 mb-3 mt-3" id="income-information">
+
+                <!-- INCOME-SECTION Container -->
+                <div class="pb-5 pt-5 container-fluid row align-items-center mb-2">
+
+                    <div class="col-5 col-md-6 p-0 dynamic-income-info income-graphs">
+                        <!-- Income Graph DYNAMICALLY CREATED from main.js -->
+                    </div>
+
+                    <!-- INCOME Details -->
+                    <div class="col-7 col-md-6 text-center">
+                        <h5 class="header">TOTAL INCOME</h5>
+                        <p class="total-income">
+                            <span>Income:</span>
+                            <span>$</span>
+                            <span>2000</span>
+                        </p>
+                        <p class="total-income">
+                            <span>Spend:</span>
+                            <span>$</span>
+                            <span>2000</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- *** BUDGET INFO *** -->
+            <div class="m-3 m-md-5 mt-5" id="budget-information">
+                <!-- BUDGET-BLOCKS - DYNAMICALLY CREATED from main.js -->
+
+
+                <!-- Modal -->
+                <div class="modal fade budget-modal" id="budget-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                    <span>Modify Budget:</span>
+                                    <span class="budget-type"></span>
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>
     </section>
     
     <!-- Currency exchange section -->
@@ -81,12 +154,16 @@
     </section>
 
     <!-- bootstrap popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
     <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <!-- day.js -->
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
+    <!-- Our custom scripts -->
     <script src="../js/apikey.js"></script>
 
     <script src="../js/api-main.js"></script>
@@ -94,4 +171,5 @@
     <script src="../js/welcome.js"></script>
     <script src="../js/main.js"></script>
 </body>
+
 </html>

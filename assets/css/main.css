@@ -14,10 +14,88 @@ section.dashboard div{
 /* new expense section styles */
 
 
-/* budget section styles */
 
+/* === DYNAMIC BUDGET SECTION styles === */
+
+.currency-symbol {
+    margin-left: 2px;
+    margin-right: 2px;
+}
 section.budget{
-    max-width: 100%;
     background-color: rgb(45, 45, 45);
     color: aliceblue;
+    padding-bottom: 10px;
+}
+
+/* Graph */
+.outer-graph {
+    background-color: white;
+    color: rgb(189, 189, 189);
+    border-radius: 2px;
+    height: 0.6rem;
+}
+.inner-graph {
+    background-color: rgb(0, 255, 123);
+    width: 37%;
+    min-height: 100%;
+    border-radius: 2px;
+}
+.inner-graph p {
+    margin: 0px;
+    padding: 5px;
+}
+
+/* Button */
+.add-remove-btn {
+    margin: 0px;
+    padding: 0px;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    font-weight: 100;
+}
+
+/* Adds space between divider in column 2 */
+.with-space {
+    margin: 0 15px;
+}
+
+
+
+/* === DYNAMIC INCOME SECTION styles === */
+
+.income-outer-graph {
+    background-color: transparent;
+    color: rgb(189, 189, 189);
+    border-radius: 2px;
+    min-height: 1.5em;
+    width: 100%;
+}
+.income-inner-graph {
+    background-color: rgb(0, 255, 123);
+    width: 100%;
+    min-height: 1.5em;
+    border-radius: 2px;
+    color: black;
+}
+
+#income-information .graph-text {
+    max-width: 20rem;
+    font-size: 12px;
+
+}
+
+#income-information .header {
+    /* max-width: 10rem; */
+    font-size: 20px;
+
+}
+
+
+
+/* *** MODAL *** */
+
+.budget-modal .modal-content {
+    background-color: #414141;
+    border-radius: 3px;
 }

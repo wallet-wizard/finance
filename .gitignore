@@ -1,0 +1,5 @@
+# Global .gitignore Files
+apikey.js
+
+# Dimitris .ingore Files
+assets/html/_structures.html
