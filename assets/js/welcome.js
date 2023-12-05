@@ -123,6 +123,9 @@ formDiv.addEventListener('submit', (event) => {
     // Check if info is valid / sufficient - alert user if not
     // TCB //
 
+    // GET SYMBOL //
+    // TBC //
+
     // Create object of specified schema
     let userData = {
         basicInfo: {

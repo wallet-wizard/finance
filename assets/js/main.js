@@ -11,23 +11,23 @@ todaysDate.text(longDate)
 
 // GLOBAL CONSTS
 const budgetModal = document.querySelector("#budget-modal");
-
+const bootstrapModal = new bootstrap.Modal(budgetModal);
+const budgetModalBtn = document.querySelector("#submit-modal-btn");
 
 
 // ============ USER DATA ============= //
 
 // GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
-const currentUser = localStorage.getItem('WalletWizUsername') || null;
+const CURRENT_USER = localStorage.getItem('WalletWizUsername') || null;
 
 // USER DATA LOG (for testing / checking)
-console.log("Current User:", currentUser);
-console.log("DATA", DATA[currentUser]);
+console.log("Current User:", CURRENT_USER);
+console.log("DATA", DATA[CURRENT_USER]);
 
 // Return to welcome.html if username is not set.
-if (currentUser === null) {
-    console.log("here");
+if (CURRENT_USER === null) {
     window.location.href = '../../welcome.html';
-} else if (currentUser !== DATA[currentUser].basicInfo.username) {
+} else if (CURRENT_USER !== DATA[CURRENT_USER].basicInfo.username) {
     window.location.href = '../../welcome.html';
 }
 
@@ -44,8 +44,6 @@ const CURRENCY_SYMBOL = '';
 // Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
 const DAYSINMONTH = dayjs().daysInMonth();
-// console.log("DAYS IN MONTH: ", DAYSINMONTH);
-
 
 
 
@@ -57,6 +55,8 @@ startApp();
 // ======================= //
 
 
+
+
 // START APP (MAIN) FUNCTION
 // Runs of page refresh
 
@@ -65,6 +65,12 @@ function startApp() {
     // Clear Current Amounts if it's 1st of the month, 
     // maybe give report to user before? 
     // TBC //
+
+    // Update Total Income / Spent
+    const incomeTotals = calculateTotal();
+    console.log(incomeTotals);
+    updateIncomeDetails("income", "TOTAL", "Income", CURRENCY_SYMBOL, incomeTotals.totalIncome);
+    updateIncomeDetails("more", "TOTAL", "Spent", CURRENCY_SYMBOL, incomeTotals.totalSpent);
 
 
     // Create Budget Blocks
@@ -160,34 +166,43 @@ newExpenseBtn.on('click', () => {
 // ** Code adopted from bootstrap 5 - Modals
 
 budgetModal.addEventListener('show.bs.modal', event => {
+
     // Button that triggered the modal
     const button = event.relatedTarget
+
     // Extract info from data-bs-id attributes
     const budgetID = button.getAttribute('data-bs-id');
 
-    // console.log("Budget ID:", budgetID);
+    // Change default budget type selection
+    const budgetDefaultSelection = document.querySelector("#budget-modal-default-option");
+    budgetDefaultSelection.value = budgetID;
+    budgetDefaultSelection.innerText = budgetID;
 
     currentBudget = {};
     for (type of budgets) {
         if (type.desc === budgetID) {
-            // console.log(type)
             currentBudget = type;
         }
     }
-    console.log("Current Budget:", currentBudget);
 
-    // WORKING ON THAT NOW //
+    const budgetTypeEl = document.querySelector(".budget-type");
+    budgetTypeEl.innerText = budgetID;
 
-    // Update the modal's content
-    // const modalTitle = exampleModal.querySelector('.modal-title');
-    // const modalBodyInput = exampleModal.querySelector('.modal-body input');
-
-    // modalTitle.textContent = `New message to ${id}`;
-    // modalBodyInput.value = id;
-  })
+    
+});
 
 
+budgetModalBtn.addEventListener('click', (event) => {
 
+    const desc = document.querySelector("#budget-modal-expense-desc").value;
+    const amount = document.querySelector("#budget-modal-expense-amount").value;
+    const type = document.querySelector("#budget-modal-expense-type").value;
+
+    addExpense(desc, amount, type);
+
+    // Hide Modal
+    bootstrapModal.hide();
+});
 
 // ================================== //
 
@@ -305,9 +320,8 @@ function createIncomeGraph(desc, amount, total) {
         return;
     }
 
-    // console.log("Amount:", amount);
+    // Get percentage
     const perc = getPercentage(amount, total);
-    // console.log("PERCENTAGE:", perc);
 
     // Graph
     const outerGraph = createNewEl("div", "income-outer-graph");
@@ -320,6 +334,63 @@ function createIncomeGraph(desc, amount, total) {
 
     return incomeGraphBlock;
 }
+
+
+
+// INCOME DETAILS (right column)
+
+function calculateTotal() {
+
+    // Get Monthly Total Amount 
+    console.log("INCOME:", income);
+    let totalAmount = 0;
+    for(work of income) {
+        const workAmount = Number(work.amount);
+        const freq = Number(work.freq);
+        const workAmountMonthly = getRates(workAmount, freq, newFreq=5, workHours=8);
+
+        totalAmount += Number(workAmountMonthly); 
+    }
+    
+    // Get Spent amount
+    let totalSpent = 0;
+    if (DATA[CURRENT_USER].hasOwnProperty('expenses')) {
+        const expenses = DATA[CURRENT_USER].expenses;
+        
+        for (expense of expenses) {
+            const amount = Number(expense.amount);
+            totalSpent += amount;
+        }
+    }
+    
+    //  Update decimals
+    totalAmount = totalAmount.toFixed(2);
+    totalSpent = totalSpent.toFixed(2);
+
+    // console.log("TOTAL AMOUNT:", totalAmount);
+    // console.log("TOTAL SPENT:", totalSpent);
+
+    return {totalSpent: totalSpent, totalIncome: totalAmount};
+}
+
+
+function updateIncomeDetails(section, incomeType, text, currencySymbol, amount) {
+    const incomeDetailsContainer = document.querySelector("#income-details-section");
+    const headerEl = incomeDetailsContainer.querySelector(`.header`);
+    const sectionEl = incomeDetailsContainer.querySelector(`.${section}-details`);
+    const textEl = sectionEl.querySelector(".details-text");
+    const symbolEl = sectionEl.querySelector(".currency-symbol");
+    const amountEl = sectionEl.querySelector(".amount");
+    amountEl.setAttribute("data-base-amount", amount);
+
+    headerEl.innerText = `${incomeType}`;
+    textEl.innerText = `${text}:`
+    symbolEl.innerText = currencySymbol;
+    amountEl.innerText = amount;
+}
+
+
+
 
 
 
@@ -442,4 +513,126 @@ function getCurrentYearDays() {
     }
 
     return daysCount;
+}
+
+
+// 5. Add expense to USER DATA
+function addExpense(desc, amount, budgetType) {
+
+    const budgetBlocks = document.querySelectorAll(".budget-block");
+
+    let localStorageData = DATA;
+
+    let newExpense = {
+        desc: desc,
+        amount: amount,
+        type: budgetType,
+        logDate: dayjs().format('YYYYMMDD-HHmmss')
+    }
+
+    if (localStorageData[CURRENT_USER].hasOwnProperty("expenses")) {
+        localStorageData[CURRENT_USER]["expenses"].push(newExpense);
+    } else {
+        localStorageData[CURRENT_USER]["expenses"] = [];
+        localStorageData[CURRENT_USER]["expenses"].push(newExpense);
+    }
+
+    let newBudgets = budgets;
+
+    for (const i in budgets) {
+        if (budgets[i].desc === budgetType) {
+
+            let previousAmount = Number(budgets[i].currentAmount);
+            let newAmount = previousAmount + Number(amount);
+            newBudgets[i].currentAmount = newAmount;
+
+            if (newAmount > budgets[i].amount) {
+                newBudgets[i].over = "yes";
+            }
+
+            localStorageData[CURRENT_USER].budgets = newBudgets;
+
+            // Update BudgetBlock
+            updateBudgetBlockHTMLInfo(budgetType, newAmount);
+
+            const totalSpent = calculateTotal();
+            console.log("DDD", totalSpent)
+            updateSpentHTMLInfo(totalSpent.totalSpent);
+            
+        }
+    }
+
+    // Update localStorage
+    const stringifiedData = JSON.stringify(localStorageData);
+    localStorage.setItem("walletWizDataSet", stringifiedData);
+    console.log("DONE!");
+}
+
+
+// Updates Any HTML (not localStorage) information in Budget Blocks
+function updateBudgetBlockHTMLInfo(
+    type, 
+    newCurrent=null, 
+    newCap=null, 
+    newType=null, 
+    newSymbol=null, 
+    newDivider=null) {
+
+    const budgetBlocks = document.querySelectorAll(".budget-block");
+
+    // Search for block, and if you find it do the following
+    budgetBlocks.forEach(budgetBlock => {
+
+        // Store h5 element that holds current Element
+        const h5Element = budgetBlock.querySelector("h5");
+        
+        if (h5Element && h5Element.innerText.trim() === type) {
+
+            // Select elements
+            const currentAmountEl = budgetBlock.querySelector(".current-amount-num");
+            const capEl = budgetBlock.querySelector(".cap-amount-num");
+            const symbolEl = budgetBlock.querySelector(".currency-symbol");
+            const dividerEl = budgetBlock.querySelector(".divider");
+            const descEl = budgetBlock.querySelector(".desc");
+            const innerGraphEl = budgetBlock.querySelector(".inner-graph");
+            const percentageEl = budgetBlock.querySelector(".percentage");
+
+
+            // Handle both cases (if user specified or didn't specify something)
+            if (newCap !== null) {
+                capEl.innerText = Number(newCap).toFixed(2);
+            } else {
+                newCap = Number(capEl.innerText);
+            }
+
+            if (newCurrent !== null) {
+                currentAmountEl.innerText = Number(newCurrent).toFixed(2);
+            } else {
+                newCurrent = Number(currentAmountEl.innerText);
+            }
+
+            if (newSymbol !== null) {
+                symbolEl.innerText = newSymbol;
+            }
+            if (newType !== null) {
+                descEl.innerText = newType;
+            }
+            if (newDivider !== null) {
+                dividerEl.innerText = newDivider;
+            }
+
+
+            //  Update HTML
+            const percentage = getPercentage(newCurrent, newCap);
+            if (percentage < 100) {
+                percentageEl.innerText = `${percentage}%`;
+                innerGraphEl.setAttribute("style", `width: ${percentage}%`);
+            }
+        }
+    });
+}
+
+function updateSpentHTMLInfo(totalSpent) {
+    const spentAmountEl = document.querySelector(".spent");
+    spentAmountEl.innerText = totalSpent;
 }
