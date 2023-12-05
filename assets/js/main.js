@@ -299,6 +299,7 @@ function createIncomeGraph(desc, amount, total) {
         const dividerSpan = createNewEl("span", ["divider", "mb-1", "ms-2", "me-2"], "|");
         const symbolSpan = createNewEl("span", ["amount", "mb-1", "currency-symbol"], symbolStr);
         const amountSpan = createNewEl("span", ["amount", "mb-1", "number"], amountStr);
+        amountSpan.setAttribute('data-base-amount', amountStr);
         descContainer.append(descSpan, dividerSpan, symbolSpan, amountSpan);
     } else {
         return;
