@@ -246,8 +246,11 @@ function createBudgetBlock(desc, currentAmount, cap) {
     const amountContainer = createNewEl("p", ["col-6", "m-0", "d-flex", "align-items-center", "amount-container"]);
     // Current Amount Span
     const currentAmountSpan = createNewEl("span", ["number", "current-amount-num"], currentAmount);
+    currentAmountSpan.setAttribute('data-base-amount', currentAmount);
     // Cap Amount Span
     const capAmountSpan = createNewEl("span", ["number", "cap-amount-num"], cap);
+    capAmountSpan.setAttribute('data-base-amount', cap);
+
     //  Divider && Symbol Spans
     const dividerSpan = createNewEl("span", ["divider", "with-space"], "/");
     const symbolSpan1 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
