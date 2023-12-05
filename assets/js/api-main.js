@@ -65,6 +65,12 @@ currencySubmitButton.addEventListener("click", function() {
 }).then(function(data){
     var exchangeRate = data.data[newCurrency].value
 
+    var allNumberElements = document.querySelectorAll('.number');
+    var allNumberElementsArray = Array.from(allNumberElements)
+
+    var allNumberElementValues = allNumberElementsArray.map(element => Number(element.innerText) * exchangeRate);
+
+    console.log(allNumberElementValues)
     })
 
 
