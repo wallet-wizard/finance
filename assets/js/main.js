@@ -12,7 +12,7 @@ todaysDate.text(longDate)
 // GLOBAL CONSTS
 const budgetModal = document.querySelector("#budget-modal");
 const bootstrapModal = new bootstrap.Modal(budgetModal);
-
+const budgetModalBtn = document.querySelector("#submit-modal-btn");
 
 
 // ============ USER DATA ============= //
@@ -183,22 +183,19 @@ budgetModal.addEventListener('show.bs.modal', event => {
     budgetTypeEl.innerText = budgetID;
 
     
-    
-    
-    const budgetModalBtn = document.querySelector("#submit-modal-btn");
+});
 
-    budgetModalBtn.addEventListener('click', (event) => {
 
-        const desc = document.querySelector("#budget-modal-expense-desc").value;
-        const amount = document.querySelector("#budget-modal-expense-amount").value;
-        const type = document.querySelector("#budget-modal-expense-type").value;
+budgetModalBtn.addEventListener('click', (event) => {
 
-        addExpense(desc, amount, type);
+    const desc = document.querySelector("#budget-modal-expense-desc").value;
+    const amount = document.querySelector("#budget-modal-expense-amount").value;
+    const type = document.querySelector("#budget-modal-expense-type").value;
 
-        // Hide Modal
-        bootstrapModal.hide();
-    });
-    
+    addExpense(desc, amount, type);
+
+    // Hide Modal
+    bootstrapModal.hide();
 });
 
 // ================================== //
