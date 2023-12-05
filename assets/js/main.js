@@ -11,24 +11,8 @@ todaysDate.text(longDate)
 
 dashboardMonth.text(dayjs().format('MMMM'))
 
-
-//Event listener for 'description' input
-descInput.on('keypress', event => {
-    if(event.key === 'Enter'){
-        console.log('hi')
-        console.log(descInput.val());
-    }
-})
-
-//Event listener for 'amount' input
-amountInput.on('keypress', event => {
-    if(event.key === 'Enter'){
-        console.log('hi')
-        console.log(amountInput.val());
-    }
-})
-
 newExpenseBtn.on('click', () => {
     console.log(amountInput.val())
     console.log(descInput.val())
 })
+
