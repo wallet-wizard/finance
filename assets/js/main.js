@@ -32,11 +32,11 @@ if (CURRENT_USER === null) {
 }
 
 // Store USER DATA
-const basicInfo = DATA[CURRENT_USER].basicInfo;
-const budgets = DATA[CURRENT_USER].budgets;
-const income = DATA[CURRENT_USER].income;
-const preferences = DATA[CURRENT_USER].preferences;
-const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
+const basicInfo = DATA[currentUser].basicInfo;
+const budgets = DATA[currentUser].budgets;
+const income = DATA[currentUser].income;
+const preferences = DATA[currentUser].preferences;
+const CURRENCY_SYMBOL = '';
 
 // ================================== //
 
@@ -300,7 +300,8 @@ function createBudgetBlock(desc, currentAmount, cap) {
 
 function createIncomeGraph(desc, amount, total) {
 
-    const amountStr = `${CURRENCY_SYMBOL}${amount}` 
+    const symbolStr = `${CURRENCY_SYMBOL}` 
+    const amountStr = `${amount}` 
 
     // // Outer Block
     const incomeGraphBlock = createNewEl("div", ["d-flex", "flex-column", "mb-2", "income-graph-container"]);
@@ -311,8 +312,10 @@ function createIncomeGraph(desc, amount, total) {
 
     if (amount !== 0) {
         const dividerSpan = createNewEl("span", ["divider", "mb-1", "ms-2", "me-2"], "|");
-        const symbolSpan = createNewEl("span", ["amount", "mb-1"], amountStr);
-        descContainer.append(descSpan, dividerSpan, symbolSpan);
+        const symbolSpan = createNewEl("span", ["amount", "mb-1", "currency-symbol"], symbolStr);
+        const amountSpan = createNewEl("span", ["amount", "mb-1", "number"], amountStr);
+        amountSpan.setAttribute('data-base-amount', amountStr);
+        descContainer.append(descSpan, dividerSpan, symbolSpan, amountSpan);
     } else {
         return;
     }
