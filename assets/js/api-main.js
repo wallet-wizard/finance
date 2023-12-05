@@ -77,3 +77,12 @@ currencySubmitButton.addEventListener("click", function() {
 
     
 })
+
+
+// Updating the currency symbol upon user login
+
+    var newCurrencySymbol = Intl.NumberFormat('en-GB', {style:"currency", currency: baseCode, currencyDisplay: "narrowSymbol"}).format(0)[0]
+    var allSymbolElements = document.querySelectorAll('.currency-symbol');
+    allSymbolElements.forEach(element => {
+        element.innerText = newCurrencySymbol
+    })
