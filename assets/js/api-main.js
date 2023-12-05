@@ -58,9 +58,13 @@ currencySubmitButton.addEventListener("click", function() {
     fetch(currencyAPILink).then(function(response){
     return response.json()
 }).then(function(data){
-    console.log({data})
     var exchangeRate = data.data[newCurrency].value
 
+    var newCurrencySymbol = Intl.NumberFormat('en-GB', {style:"currency", currency: newCurrency, currencyDisplay: "narrowSymbol"}).format(0)[0]
+    var allSymbolElements = document.querySelectorAll('.currency-symbol');
+    allSymbolElements.forEach(element => {
+        element.innerText = newCurrencySymbol
+    })
 
 
     var allNumberElements = document.querySelectorAll('.number');
