@@ -36,7 +36,7 @@ const basicInfo = DATA[currentUser].basicInfo;
 const budgets = DATA[currentUser].budgets;
 const income = DATA[currentUser].income;
 const preferences = DATA[currentUser].preferences;
-const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
+const CURRENCY_SYMBOL = '';
 
 // ================================== //
 
@@ -285,7 +285,8 @@ function createBudgetBlock(desc, currentAmount, cap) {
 
 function createIncomeGraph(desc, amount, total) {
 
-    const amountStr = `${CURRENCY_SYMBOL}${amount}` 
+    const symbolStr = `${CURRENCY_SYMBOL}` 
+    const amountStr = `${amount}` 
 
     // // Outer Block
     const incomeGraphBlock = createNewEl("div", ["d-flex", "flex-column", "mb-2", "income-graph-container"]);
@@ -296,8 +297,9 @@ function createIncomeGraph(desc, amount, total) {
 
     if (amount !== 0) {
         const dividerSpan = createNewEl("span", ["divider", "mb-1", "ms-2", "me-2"], "|");
-        const symbolSpan = createNewEl("span", ["amount", "mb-1"], amountStr);
-        descContainer.append(descSpan, dividerSpan, symbolSpan);
+        const symbolSpan = createNewEl("span", ["amount", "mb-1", "currency-symbol"], symbolStr);
+        const amountSpan = createNewEl("span", ["amount", "mb-1", "number"], amountStr);
+        descContainer.append(descSpan, dividerSpan, symbolSpan, amountSpan);
     } else {
         return;
     }
