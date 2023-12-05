@@ -66,6 +66,12 @@ function startApp() {
     // maybe give report to user before? 
     // TBC //
 
+    // Update Total Income / Spent
+    const incomeTotals = calculateTotal();
+    console.log(incomeTotals);
+    updateIncomeDetails("income", "TOTAL", "Income", CURRENCY_SYMBOL, incomeTotals.totalIncome);
+    updateIncomeDetails("more", "TOTAL", "Spent", CURRENCY_SYMBOL, incomeTotals.totalSpent);
+
 
     // Create Budget Blocks
     const budgetInfoDiv = document.querySelector("#budget-information");
@@ -328,6 +334,63 @@ function createIncomeGraph(desc, amount, total) {
 
 
 
+// INCOME DETAILS (right column)
+
+function calculateTotal() {
+
+    // Get Monthly Total Amount 
+    console.log("INCOME:", income);
+    let totalAmount = 0;
+    for(work of income) {
+        const workAmount = Number(work.amount);
+        const freq = Number(work.freq);
+        const workAmountMonthly = getRates(workAmount, freq, newFreq=5, workHours=8);
+
+        totalAmount += Number(workAmountMonthly); 
+    }
+    
+    // Get Spent amount
+    let totalSpent = 0;
+    if (DATA[CURRENT_USER].hasOwnProperty('expenses')) {
+        const expenses = DATA[CURRENT_USER].expenses;
+        
+        for (expense of expenses) {
+            const amount = Number(expense.amount);
+            totalSpent += amount;
+        }
+    }
+    
+    //  Update decimals
+    totalAmount = totalAmount.toFixed(2);
+    totalSpent = totalSpent.toFixed(2);
+
+    // console.log("TOTAL AMOUNT:", totalAmount);
+    // console.log("TOTAL SPENT:", totalSpent);
+
+    return {totalSpent: totalSpent, totalIncome: totalAmount};
+}
+
+
+function updateIncomeDetails(section, incomeType, text, currencySymbol, amount) {
+    const incomeDetailsContainer = document.querySelector("#income-details-section");
+    const headerEl = incomeDetailsContainer.querySelector(`.header`);
+    const sectionEl = incomeDetailsContainer.querySelector(`.${section}-details`);
+    const textEl = sectionEl.querySelector(".details-text");
+    const symbolEl = sectionEl.querySelector(".currency-symbol");
+    const amountEl = sectionEl.querySelector(".amount");
+    amountEl.setAttribute("data-base-amount", amount);
+
+    headerEl.innerText = `${incomeType}`;
+    textEl.innerText = `${text}:`
+    symbolEl.innerText = currencySymbol;
+    amountEl.innerText = amount;
+}
+
+
+
+
+
+
 // ================================== //
 
 // ** HELPER FUNCTIONS ** //
@@ -487,7 +550,11 @@ function addExpense(desc, amount, budgetType) {
             localStorageData[CURRENT_USER].budgets = newBudgets;
 
             // Update BudgetBlock
-            updateBudgetBlockHTMLInfo(budgetType, newAmount)
+            updateBudgetBlockHTMLInfo(budgetType, newAmount);
+
+            const totalSpent = calculateTotal();
+            console.log("DDD", totalSpent)
+            updateSpentHTMLInfo(totalSpent.totalSpent);
             
         }
     }
@@ -560,4 +627,9 @@ function updateBudgetBlockHTMLInfo(
             }
         }
     });
+}
+
+function updateSpentHTMLInfo(totalSpent) {
+    const spentAmountEl = document.querySelector(".spent");
+    spentAmountEl.innerText = totalSpent;
 }
