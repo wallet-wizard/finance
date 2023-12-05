@@ -46,7 +46,7 @@ function addCurrenciesToDropDown(list){
 // Confirming the currency code for base and new currencies
 // Using currency API to find out the current exchange rate
 // Use the current exchange rate to amend figures and currency symbol
-var baseCode = DATA[currentUser].preferences.currency
+var baseCode = DATA[CURRENT_USER].preferences.currency
 
 var currencyAPILink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + baseCode
 
@@ -77,3 +77,12 @@ currencySubmitButton.addEventListener("click", function() {
 
     
 })
+
+
+// Updating the currency symbol upon user login
+
+    var newCurrencySymbol = Intl.NumberFormat('en-GB', {style:"currency", currency: baseCode, currencyDisplay: "narrowSymbol"}).format(0)[0]
+    var allSymbolElements = document.querySelectorAll('.currency-symbol');
+    allSymbolElements.forEach(element => {
+        element.innerText = newCurrencySymbol
+    })
