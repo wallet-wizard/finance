@@ -2,6 +2,17 @@
 
 // const currentUser = localStorage.getItem('WalletWizUsername') || null;
 
+
+var yourAPIkey = localStorage.getItem("WWapikey");
+if (yourAPIkey === null) {
+    const userkey = prompt("Please Enter your currencyapi.com key:");
+    localStorage.setItem("WWapikey", userkey);
+    yourAPIkey = userkey;
+}
+
+
+console.log("API:", yourAPIkey);
+
 var allCountries = "https://restcountries.com/v3.1/all?fields=name,currencies"
 
 var currencyExchangeDropDown = document.getElementById("currency-exchange")
