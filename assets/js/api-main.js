@@ -46,9 +46,9 @@ function addCurrenciesToDropDown(list){
 // Confirming the currency code for base and new currencies
 // Using currency API to find out the current exchange rate
 // Use the current exchange rate to amend figures and currency symbol
-var baseCode = DATA[currentUser].preferences.currencyCode
+var baseCode = DATA[currentUser].preferences.currency
 
-var currencyAPILink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIKey + "&currencies=&base_currency=" + baseCode
+var currencyAPILink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + baseCode
 
 
 
@@ -60,12 +60,12 @@ currencySubmitButton.addEventListener("click", function() {
     
     console.log({newCurrency})
 
-    // fetch(allCountries).then(function(response){
-//     return response.json()
-// }).then(function(data){
-    
+    fetch(currencyAPILink).then(function(response){
+    return response.json()
+}).then(function(data){
+    var exchangeRate = data.data[newCurrency].value
 
-// })
+    })
 
 
     
