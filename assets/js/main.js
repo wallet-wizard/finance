@@ -634,3 +634,5 @@ function updateSpentHTMLInfo(totalSpent) {
     const spentAmountEl = document.querySelector(".spent");
     spentAmountEl.innerText = totalSpent;
 }
+
+welcomeName.text(basicInfo.name);
