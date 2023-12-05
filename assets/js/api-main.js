@@ -1,11 +1,8 @@
 // Compiling list of currencies in Currency Exchange section:
 
 // const currentUser = localStorage.getItem('WalletWizUsername') || null;
-// var baseCode = DATA[currentUser].preferences.currencyCode
-var allCountries = "https://restcountries.com/v3.1/all?fields=name,currencies"
-// var allCurrencies = `https://api.currencyapi.com/v3/latest?apikey=cur_live_D2q3pLXOGPUlu8h9OYqy3BldNfsU0IzxtcivwgEb&currencies=&base_currency=${}`
 
-var currencyList = []
+var allCountries = "https://restcountries.com/v3.1/all?fields=name,currencies"
 
 var currencyExchangeDropDown = document.getElementById("currency-exchange")
 
@@ -46,6 +43,15 @@ function addCurrenciesToDropDown(list){
 
 }
 
+// Confirming the currency code for base and new currencies
+// Using currency API to find out the current exchange rate
+// Use the current exchange rate to amend figures and currency symbol
+var baseCode = DATA[currentUser].preferences.currencyCode
+
+var currencyAPILink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIKey + "&currencies=&base_currency=" + baseCode
+
+
+
 
 var currencySubmitButton = document.getElementById("currency-exchange-button")
 
@@ -53,4 +59,14 @@ currencySubmitButton.addEventListener("click", function() {
     var newCurrency = currencyExchangeDropDown.value;
     
     console.log({newCurrency})
+
+    // fetch(allCountries).then(function(response){
+//     return response.json()
+// }).then(function(data){
+    
+
+// })
+
+
+    
 })
