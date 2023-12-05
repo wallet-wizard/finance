@@ -1,3 +1,12 @@
+/*
+TESTS: 
+go to Application > localStorage and Update 
+the 'walletWizDataSet' key with the following value.
+Then, use test1 / test2 / test3 / test4 in username.
+{"test4":{"basicInfo":{"name":"Dimitris","lastName":"Giannoulis","username":"test4"},"preferences":{"country":"United Kingdom","currency":"GBP"},"income":[{"desc":"FA","amount":"2000","freq":"5"},{"desc":"Freelance Web Dev","amount":"200","freq":"3"}],"budgets":[{"desc":"Expenses","amount":"1000","freq":"5","over":"no","currentAmount":230.52},{"desc":"Groceries","amount":"40","freq":"3","over":"no","currentAmount":43.34},{"desc":"Transport","amount":"160","freq":"5","over":"yes","currentAmount":172.55},{"desc":"Other","amount":"200","freq":"5","over":"no","currentAmount":160.22},{"desc":"Savings","amount":"200","freq":"5","over":"no","currentAmount":30}]},"test1":{"basicInfo":{"name":"John","lastName":"Richy","username":"test1"},"preferences":{"country":"United States","currency":"United States dollar"},"income":[{"desc":"RichComp LTD","amount":"18000","freq":"5"},{"desc":"MyComp Free","amount":"1000","freq":"3"},{"desc":"Personal Revenue","amount":"1","freq":"1"}],"budgets":[{"desc":"Groceries","amount":"500","freq":"3","over":"no","currentAmount":330.25},{"desc":"Shopping","amount":"100","freq":"2","over":"no","currentAmount":1035.62},{"desc":"House","amount":"4590","freq":"5","over":"no","currentAmount":4000.00},{"desc":"Holidays","amount":"10000","freq":"6","over":"no","currentAmount":3300}]},"test2":{"basicInfo":{"name":"John","lastName":"Poorguy","username":"test2"},"preferences":{"country":"United Kingdom","currency":"British pound"},"income":[{"desc":"Bar-part time","amount":"300","freq":"4"},{"desc":"Modeling","amount":"200","freq":"5"}],"budgets":[{"desc":"Groceries","amount":"25","freq":"3","over":"yes","currentAmount":120},{"desc":"House","amount":"850","freq":"5","over":"no","currentAmount":800.00},{"desc":"Other","amount":"50","freq":"5","over":"no","currentAmount":13.32},{"desc":"Holidays","amount":"300","freq":"6","over":"no","currentAmount":0}]},"test3":{"basicInfo":{"name":"John","lastName":"Average","username":"test3"},"preferences":{"country":"United Kingdom","currency":"British pound"},"income":[{"desc":"Bar-part time","amount":"300","freq":"4"},{"desc":"Shop LTD","amount":"1700","freq":"5"}],"budgets":[{"desc":"Groceries","amount":"100","freq":"4","over":"no","currentAmount":30},{"desc":"Shopping","amount":"100","freq":"5","over":"no","currentAmount":25.04},{"desc":"Housing","amount":"900","freq":"5","over":"no","currentAmount":0}]}}
+*/
+
+
 // SELECTORS
 
 const formDiv = document.querySelector("#onboarding-form");
@@ -6,6 +15,7 @@ const firstNameEl = document.querySelector("#first-name");
 const lastNameEl = document.querySelector("#last-name");
 const countryEl = document.querySelector("#country");
 const currencyEl = document.querySelector("#currency");
+const newUserBlock = document.querySelector(".new-user-block");
 
 const incomeDiv = document.querySelector(".income-blocks");
 const budgetDiv = document.querySelector(".budget-blocks");
@@ -17,10 +27,10 @@ const removeBudgetBtn = document.querySelector("#remove-budget");
 
 
 const FREQUENCY = ["Hourly", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly"];
-const USERNAMES = ['dimi92', 'john123', 'eleniG', 'ahmed55'];
 const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
 
-console.log("DATA from LS:", DATA);
+
+// console.log("DATA from LS:", DATA);
 
 
 // EVENT LISTENERS
@@ -42,6 +52,16 @@ removeBudgetBtn.addEventListener('click', () => {
 });
 
 
+const storedUsername = localStorage.getItem('WalletWizUsername') || null;
+// Display name in field if username exist
+if (storedUsername !== null) {
+    console.log("here!")
+    usernameEl.value = storedUsername;
+}
+
+
+// *** FORM SUBMISSION *** //
+
 formDiv.addEventListener('submit', (event) => {
 
     //  Prevents default action of submit
@@ -57,12 +77,22 @@ formDiv.addEventListener('submit', (event) => {
         console.log(`${username} exists in the object.`);
         console.log("Usernme exists. I will go to main.html");
 
-        // Redirect to main.html
-        // window.location.href = './assets/html/main.html';
-        return; // Stop further execution
+        // Update username and redirect to main.html
+        localStorage.setItem('WalletWizUsername', username);
+        window.location.href = './assets/html/main.html';
+        return username; // Stop further execution
     } else {
-        console.log(`${username} does not exist in the object.`);
-        console.log("New userData created.")
+        const staging = localStorage.getItem('WWuserStaging') || "";
+
+        if (staging === username) {
+            console.log(`${username} does not exist in the object.`);
+            console.log("Proceed.")
+        } else {
+            localStorage.setItem('WWuserStaging', username);
+            toggleNewUserVisibility();
+            return;
+            
+        }
     }
 
     // Evaluate that username has allowed chars - show error messages if not
@@ -112,14 +142,17 @@ formDiv.addEventListener('submit', (event) => {
     }
 
     // Update localStorage with a new user (without removing the previous users)
-    console.log(userData);
-
     let currentData = DATA;
     currentData[username] = userData;
 
-    // console.log("Current Data", currentData);
     const userDataStringified = JSON.stringify(currentData);
     localStorage.setItem('walletWizDataSet', userDataStringified);
+
+    // Update USERNAME
+    localStorage.setItem('WalletWizUsername', username);
+
+    // Go to main.html
+    window.location.href = './assets/html/main.html';
 });
 
 
@@ -219,10 +252,25 @@ function getSectionData(parentDiv, includeOver = false) {
 
         if (includeOver) {
             obj['over'] = 'no';
+            obj['currentAmount'] = 0;
         }
-
+        
         arr.push(obj);
     }
 
     return arr;
+}
+
+function toggleNewUserVisibility() {
+    const value = newUserBlock.dataset.display
+
+    if (value === "show") {
+        newUserBlock.classList.add('hidden');
+        newUserBlock.dataset.display = "hidden"
+    }
+    
+    if (value === "hidden") {
+        newUserBlock.classList.remove('hidden');
+        newUserBlock.dataset.display = "show"
+    }
 }
