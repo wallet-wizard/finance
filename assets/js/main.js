@@ -26,7 +26,6 @@ console.log("DATA", DATA[CURRENT_USER]);
 
 // Return to welcome.html if username is not set.
 if (CURRENT_USER === null) {
-    console.log("here");
     window.location.href = '../../welcome.html';
 } else if (CURRENT_USER !== DATA[CURRENT_USER].basicInfo.username) {
     window.location.href = '../../welcome.html';
@@ -45,8 +44,6 @@ const CURRENCY_SYMBOL = '$'; // This needs updating depending on user preference
 // Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
 const DAYSINMONTH = dayjs().daysInMonth();
-// console.log("DAYS IN MONTH: ", DAYSINMONTH);
-
 
 
 
@@ -56,6 +53,8 @@ const DAYSINMONTH = dayjs().daysInMonth();
 startApp();
 
 // ======================= //
+
+
 
 
 // START APP (MAIN) FUNCTION
@@ -179,7 +178,6 @@ budgetModal.addEventListener('show.bs.modal', event => {
             currentBudget = type;
         }
     }
-    console.log("Current Budget:", currentBudget);
 
     const budgetTypeEl = document.querySelector(".budget-type");
     budgetTypeEl.innerText = budgetID;
@@ -188,19 +186,16 @@ budgetModal.addEventListener('show.bs.modal', event => {
     
     
     const budgetModalBtn = document.querySelector("#submit-modal-btn");
-    console.log(budgetModalBtn);
+
     budgetModalBtn.addEventListener('click', (event) => {
-
-
-        console.log(event);
 
         const desc = document.querySelector("#budget-modal-expense-desc").value;
         const amount = document.querySelector("#budget-modal-expense-amount").value;
         const type = document.querySelector("#budget-modal-expense-type").value;
 
         addExpense(desc, amount, type);
-        console.log("Submitted!!")
 
+        // Hide Modal
         bootstrapModal.hide();
     });
     
@@ -316,9 +311,8 @@ function createIncomeGraph(desc, amount, total) {
         return;
     }
 
-    // console.log("Amount:", amount);
+    // Get percentage
     const perc = getPercentage(amount, total);
-    // console.log("PERCENTAGE:", perc);
 
     // Graph
     const outerGraph = createNewEl("div", "income-outer-graph");
@@ -456,14 +450,12 @@ function getCurrentYearDays() {
 }
 
 
-// Add expense to USER DATA
+// 5. Add expense to USER DATA
 function addExpense(desc, amount, budgetType) {
 
     const budgetBlocks = document.querySelectorAll(".budget-block");
 
-    console.log("Inside addExpense()");
     let localStorageData = DATA;
-    console.log(localStorageData);
 
     let newExpense = {
         desc: desc,
@@ -480,11 +472,10 @@ function addExpense(desc, amount, budgetType) {
     }
 
     let newBudgets = budgets;
-    console.log("NEW BUDGETS:", newBudgets);
 
     for (const i in budgets) {
         if (budgets[i].desc === budgetType) {
-            console.log("FOUND BUDGET:", budgets[i]);
+
             let previousAmount = Number(budgets[i].currentAmount);
             let newAmount = previousAmount + Number(amount);
             newBudgets[i].currentAmount = newAmount;
@@ -495,25 +486,78 @@ function addExpense(desc, amount, budgetType) {
 
             localStorageData[CURRENT_USER].budgets = newBudgets;
 
-            // Update html without refreshing
-            budgetBlocks.forEach(budgetBlock => {
-                console.log("for each");
-                const h5Element = budgetBlock.querySelector("h5");
-                
-                if (h5Element && h5Element.innerText.trim() === budgetType) {
-                    console.log("found!")
-                    const currentAmountEl = document.querySelector(".current-amount-num");
-                    console.log(currentAmountEl);
-                    currentAmountEl.innerText = localStorageData[CURRENT_USER].budgets[i].currentAmount;
-                }
-            });
-
+            // Update BudgetBlock
+            updateBudgetBlockHTMLInfo(budgetType, newAmount)
+            
         }
     }
-    
 
     // Update localStorage
     const stringifiedData = JSON.stringify(localStorageData);
     localStorage.setItem("walletWizDataSet", stringifiedData);
     console.log("DONE!");
+}
+
+
+// Updates Any HTML (not localStorage) information in Budget Blocks
+function updateBudgetBlockHTMLInfo(
+    type, 
+    newCurrent=null, 
+    newCap=null, 
+    newType=null, 
+    newSymbol=null, 
+    newDivider=null) {
+
+    const budgetBlocks = document.querySelectorAll(".budget-block");
+
+    // Search for block, and if you find it do the following
+    budgetBlocks.forEach(budgetBlock => {
+
+        // Store h5 element that holds current Element
+        const h5Element = budgetBlock.querySelector("h5");
+        
+        if (h5Element && h5Element.innerText.trim() === type) {
+
+            // Select elements
+            const currentAmountEl = budgetBlock.querySelector(".current-amount-num");
+            const capEl = budgetBlock.querySelector(".cap-amount-num");
+            const symbolEl = budgetBlock.querySelector(".currency-symbol");
+            const dividerEl = budgetBlock.querySelector(".divider");
+            const descEl = budgetBlock.querySelector(".desc");
+            const innerGraphEl = budgetBlock.querySelector(".inner-graph");
+            const percentageEl = budgetBlock.querySelector(".percentage");
+
+
+            // Handle both cases (if user specified or didn't specify something)
+            if (newCap !== null) {
+                capEl.innerText = Number(newCap).toFixed(2);
+            } else {
+                newCap = Number(capEl.innerText);
+            }
+
+            if (newCurrent !== null) {
+                currentAmountEl.innerText = Number(newCurrent).toFixed(2);
+            } else {
+                newCurrent = Number(currentAmountEl.innerText);
+            }
+
+            if (newSymbol !== null) {
+                symbolEl.innerText = newSymbol;
+            }
+            if (newType !== null) {
+                descEl.innerText = newType;
+            }
+            if (newDivider !== null) {
+                dividerEl.innerText = newDivider;
+            }
+
+
+            //  Update HTML
+            const percentage = getPercentage(newCurrent, newCap);
+            if (percentage < 100) {
+                percentageEl.innerText = `${percentage}%`;
+                innerGraphEl.setAttribute("style", `width: ${percentage}%`);
+            }
+        }
+    });
 }
