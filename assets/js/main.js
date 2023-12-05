@@ -47,9 +47,6 @@ const DAYSINMONTH = dayjs().daysInMonth();
 // console.log("DAYS IN MONTH: ", DAYSINMONTH);
 
 
-
-
-
 // ====== START APP ====== //
 
 startApp();
@@ -436,4 +433,15 @@ function getCurrentYearDays() {
     }
 
     return daysCount;
+}
+
+
+// ===== AHMED ===== //
+
+// ===== TEST ===== //
+
+for(var a=0; a<DATA[currentUser].income.length; a++){
+    console.log('hi');
+
+
 }
