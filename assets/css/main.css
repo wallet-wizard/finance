@@ -8,6 +8,17 @@ section.dashboard div{
     margin: 0 auto;
 }
 
+#banner-div{
+    display: flex;
+    justify-content: space-between;
+}
+
+#switch-button{
+    max-height: 40px !important;
+    margin: auto 0;
+
+}
+
 
 
 
