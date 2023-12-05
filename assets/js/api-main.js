@@ -50,27 +50,24 @@ var baseCode = DATA[currentUser].preferences.currency
 
 var currencyAPILink = "https://api.currencyapi.com/v3/latest?apikey=" + yourAPIkey + "&currencies=&base_currency=" + baseCode
 
-
-
-
 var currencySubmitButton = document.getElementById("currency-exchange-button")
 
 currencySubmitButton.addEventListener("click", function() {
     var newCurrency = currencyExchangeDropDown.value;
-    
-    console.log({newCurrency})
 
     fetch(currencyAPILink).then(function(response){
     return response.json()
 }).then(function(data){
+    console.log({data})
     var exchangeRate = data.data[newCurrency].value
 
+
+
     var allNumberElements = document.querySelectorAll('.number');
-    var allNumberElementsArray = Array.from(allNumberElements)
-
-    var allNumberElementValues = allNumberElementsArray.map(element => Number(element.innerText) * exchangeRate);
-
-    console.log(allNumberElementValues)
+    allNumberElements.forEach(element => {
+        var updatedValue = Number(element.dataset.baseAmount) * exchangeRate
+        element.innerText = updatedValue.toFixed(2)
+    })
     })
 
 
