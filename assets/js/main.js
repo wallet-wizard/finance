@@ -634,5 +634,7 @@ function updateBudgetBlockHTMLInfo(
 
 function updateSpentHTMLInfo(totalSpent) {
     const spentAmountEl = document.querySelector(".spent");
+    spentAmountEl.setAttribute("data-base-amount", totalSpent);
     spentAmountEl.innerText = totalSpent;
 }
+
