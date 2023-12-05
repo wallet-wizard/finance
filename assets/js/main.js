@@ -32,11 +32,11 @@ if (CURRENT_USER === null) {
 }
 
 // Store USER DATA
-const basicInfo = DATA[currentUser].basicInfo;
-const budgets = DATA[currentUser].budgets;
-const income = DATA[currentUser].income;
-const preferences = DATA[currentUser].preferences;
-const CURRENCY_SYMBOL = '';
+const basicInfo = DATA[CURRENT_USER].basicInfo;
+const budgets = DATA[CURRENT_USER].budgets;
+const income = DATA[CURRENT_USER].income;
+const preferences = DATA[CURRENT_USER].preferences;
+const CURRENCY_SYMBOL = "";
 
 // ================================== //
 
