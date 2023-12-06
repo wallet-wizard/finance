@@ -519,8 +519,6 @@ function getCurrentYearDays() {
 // 5. Add expense to USER DATA
 function addExpense(desc, amount, budgetType) {
 
-    const budgetBlocks = document.querySelectorAll(".budget-block");
-
     let localStorageData = DATA;
 
     let newExpense = {
@@ -565,7 +563,8 @@ function addExpense(desc, amount, budgetType) {
     // Update localStorage
     const stringifiedData = JSON.stringify(localStorageData);
     localStorage.setItem("walletWizDataSet", stringifiedData);
-    console.log("DONE!");
+
+    location.reload();
 }
 
 
