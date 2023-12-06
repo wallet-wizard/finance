@@ -4,7 +4,7 @@ var descInput = $('#description-input');
 var todaysDate = $('#todays-date');
 var dashboardMonth = $('#dashboard-month');
 var newExpenseBtn = $('#new-expense-submit');
-var welcomeName = $('#welcome-name');
+var userName = $('.user-name');
 
 var longDate = dayjs().format('dddd D MMMM YYYY');
 todaysDate.text(longDate);
@@ -636,4 +636,4 @@ function updateSpentHTMLInfo(totalSpent) {
     spentAmountEl.innerText = totalSpent;
 }
 
-welcomeName.text(basicInfo.name);
+userName.text(basicInfo.name);

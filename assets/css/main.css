@@ -1,23 +1,64 @@
 
 /* dashboard styles */
-section.dashboard div{
-    background-color: rgb(172, 172, 172);
+
+section.dashboard{
+    background-color: black !important;
+    color: white;
 }
 
 #dash-info-div{
     margin: 0 auto;
 }
 
-#banner-div{
+#dash-banner{
     display: flex;
     justify-content: space-between;
 }
 
-#switch-button{
-    max-height: 40px !important;
+#banner-content{
+    display: flex;
+}
+
+ #message-and-button{
     margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#message-and-button #welcome-message{
+    font-size: 1.2em;
+}
+
+#switch-button{
+    max-height: 42px !important;
+    margin: auto 0;
+    transform: scale(0.75);
+}
+
+#button-and-text{
+    display: flex;
+}
+
+#dash-banner p{
+    margin: auto 0;
+}
+
+#logo{
+    max-height: 100px;
+}
+
+#logo-and-tag{
+    display: flex;
 
 }
+
+#tagline{
+    margin: auto 0;
+}
+
+
 
 
 
@@ -109,4 +150,10 @@ section.budget{
 .budget-modal .modal-content {
     background-color: #414141;
     border-radius: 3px;
+}
+
+/* *Currecncy exchange styles*/
+
+.currency-exchange-wrapper, .currency-exchange-form{
+    margin: 0 auto;
 }

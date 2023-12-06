@@ -5,8 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- chartjs -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -19,27 +17,37 @@
 
     <!-- Dashboard section -->
     <section class="dashboard">
-        <div class="container-fluid p-3">
-            
-            <div id="banner-div" class="">            
-                <p id="welcome-message" class="py-3">Welcome, <span id="welcome-name"></span></p>
-                <p id="todays-date" class="py-3 lead strong"></p>
-                <button class="btn btn-primary" id="switch-button" type="submit">Switch User</button>
-            </div>
+        <div class="container-fluid">
+            <div id="dash-banner">
+               
+                <div id="logo-and-tag" class="px-3">
 
-            
+                    <img src="../images/ww-logo-outline.png" alt="Wallet Wizard logo" id="logo">
 
-            <div class="row">
-
-                <div class="col-md-6">
-                    <div id="dash-info-div" class="w-50 py-2">
+                    <div id="tagline" class="px-3">
+                        <p class="lead text-center">Wallet Wizard</p>
+                        <p class="text-center">Your Money, Our Magic</p>
                     </div>
-                </div>
 
-                <div class="col-md-6">
                 </div>
+                
 
+              
+               <div id="banner-content" class="px-3">
+                    <div id="message-and-button" class="mx-4">
+                        <p id="welcome-message" class="text-center">Welcome, <span id="welcome-name" class="user-name"></span></p>
+                        <div id="button-and-text">
+                            <p id="button-label">Not <span class="user-name" id="button-name"></span>?</p>
+                            <button class="btn btn-primary" id="switch-button">Switch User</button>
+                        </div>
+                    </div>
+                    
+                    <p id="todays-date" class="text-center py-3"></p>
+                </div>
+                
+                
             </div>
+        
         </div>
     </section>
 
@@ -181,9 +189,9 @@
     
     <!-- Currency exchange section -->
     <section class="currency-exchange">
-        <div class="container-fluid">
+        <div class="container-fluid py-3 currency-exchange-wrapper">
             <h3 class="text-center pt-3">Currency Exchange</h3>
-            <div class="col-4 col-sm-6">
+            <div class="col-4 col-sm-6 currency-exchange-form">
                 <label for="currency">Select new currency:</label>
                 <select class="form-control" id="currency-exchange">
                     <option>...</option>
