@@ -18,9 +18,10 @@
     <!-- Dashboard section -->
     <section class="dashboard">
         <div class="container-fluid">
-            <div id="dash-banner">
-               
-                <div id="logo-and-tag" class="px-3">
+
+            <div id="dash-banner" class="row">
+            
+                <div id="logo-and-tag" class="col-md-6">
 
                     <img src="../images/ww-logo-outline.png" alt="Wallet Wizard logo" id="logo">
 
@@ -30,24 +31,22 @@
                     </div>
 
                 </div>
-                
-
-              
-               <div id="banner-content" class="px-3">
-                    <div id="message-and-button" class="mx-4">
-                        <p id="welcome-message" class="text-center">Welcome, <span id="welcome-name" class="user-name"></span></p>
-                        <div id="button-and-text">
-                            <p id="button-label">Not <span class="user-name" id="button-name"></span>?</p>
-                            <button class="btn btn-primary" id="switch-button">Switch User</button>
-                        </div>
-                    </div>
                     
-                    <p id="todays-date" class="text-center py-3"></p>
+                <div id="message-and-button" class="col-md-3">
+                    <p id="welcome-message" class="text-center">Welcome, <span id="welcome-name" class="user-name"></span></p>
+                    <div id="button-and-text">
+                        <p id="button-label">Not <span class="user-name" id="button-name"></span>?</p>
+                        <button class="btn btn-primary" id="switch-button">Switch User</button>
+                    </div>
                 </div>
-                
+
+                <div id="date-wrapper" class="col-md-3">
+                    <p id="todays-date" class="text-cente"></p>
+                </div>
+            
                 
             </div>
-        
+            
         </div>
     </section>
 

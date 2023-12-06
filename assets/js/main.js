@@ -5,6 +5,7 @@ var todaysDate = $('#todays-date');
 var dashboardMonth = $('#dashboard-month');
 var newExpenseBtn = $('#new-expense-submit');
 var userName = $('.user-name');
+var switchUserButton = $('#switch-button');
 
 var longDate = dayjs().format('dddd D MMMM YYYY');
 todaysDate.text(longDate);
@@ -637,3 +638,11 @@ function updateSpentHTMLInfo(totalSpent) {
 }
 
 userName.text(basicInfo.name);
+
+switchUserButton.on('click' , () => {
+    console.log('hi mum');
+
+    window.location.href = "../../index.html"
+})
+
+

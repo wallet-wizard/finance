@@ -31,10 +31,15 @@ section.dashboard{
     font-size: 1.2em;
 }
 
+
 #switch-button{
-    max-height: 42px !important;
+    /* max-height: 42px !important; */
     margin: auto 0;
     transform: scale(0.75);
+}
+
+#todays-date{
+    margin: auto 0 !important;
 }
 
 #button-and-text{
@@ -152,8 +157,6 @@ section.budget{
     border-radius: 3px;
 }
 
-/* *Currecncy exchange styles*/
 
-.currency-exchange-wrapper, .currency-exchange-form{
-    margin: 0 auto;
-}
+
+
