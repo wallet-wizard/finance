@@ -4,6 +4,9 @@ Welcome to Wallet Wizard, a web application that helps users manage their financ
 
 Wallet Wizard is a collaborative project developed by a team of Front End development course attendees. It serves as a budget setter and tracker application to help users manage their finances effectively. The app provides users with a seamless onboarding experience, allowing them to input essential information, set budgets, and visualize their financial data on the dashboard.
 
+<img src="./assets/images/readme-screenshot-1.png" width="160">
+<img src="./assets/images/readme-screenshot-2.png" width="300">
+
 ## Table of Contents
 
 1. [Getting Started](#getting-started)
