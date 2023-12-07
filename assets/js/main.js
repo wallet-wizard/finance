@@ -197,8 +197,12 @@ budgetModal.addEventListener('show.bs.modal', event => {
 budgetModalBtn.addEventListener('click', (event) => {
 
     const desc = document.querySelector("#budget-modal-expense-desc").value;
-    const amount = document.querySelector("#budget-modal-expense-amount").value;
+    const amount = isNumber(document.querySelector("#budget-modal-expense-amount").value);
     const type = document.querySelector("#budget-modal-expense-type").value;
+
+    if (amount === false) {
+        return;
+    }
 
     addExpense(desc, amount, type);
 
