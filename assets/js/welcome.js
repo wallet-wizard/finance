@@ -25,7 +25,6 @@ const addBudgetBtn = document.querySelector("#add-budget");
 const removeIncomeBtn = document.querySelector("#remove-income");
 const removeBudgetBtn = document.querySelector("#remove-budget");
 
-
 const FREQUENCY = ["Hourly", "Daily", "Weekly", "Bi-Weekly", "Monthly", "Yearly"];
 const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
 
@@ -36,11 +35,11 @@ const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
 // EVENT LISTENERS
 
 addIncomeBtn.addEventListener('click', () => {
-    addNewBlock(incomeDiv, 'income', 'My Company LTD.', '$');
+    addNewBlock(incomeDiv, 'income', 'Income Source', '$');
 });
 
 addBudgetBtn.addEventListener('click', () => {
-    addNewBlock(budgetDiv, 'budget', 'Groceries', '$');
+    addNewBlock(budgetDiv, 'budget', 'Budget type', '$');
 });
 
 removeIncomeBtn.addEventListener('click', () => {
@@ -68,13 +67,11 @@ formDiv.addEventListener('submit', (event) => {
 
     // Check username and see if it exists - go to main page if it does
     const username = document.querySelector("#username").value.trim();
-    console.log(username);
-    console.log(username.length);
+    // console.log(username);
+    // console.log(username.length);
 
     // Checks if username exists
     if (DATA.hasOwnProperty(username)) {
-        console.log(`${username} exists in the object.`);
-        console.log("Usernme exists. I will go to main.html");
 
         // Update username and redirect to main.html
         localStorage.setItem('WalletWizUsername', username);
@@ -106,24 +103,27 @@ formDiv.addEventListener('submit', (event) => {
     const incomeData = getSectionData(incomeDiv);
     const budgetData = getSectionData(budgetDiv, true);
 
-    console.log('')
-    console.log(`=============`)
-    console.log(`USER DATA`)
-    console.log(`---------`)
-    console.log(`First name: ${firstName}`);
-    console.log(`Last name: ${lastName}`);
-    console.log(`Country: ${country}`);
-    console.log(`Currency: ${currency}`);
-    console.log(`Income Data: `, incomeData);
-    console.log(`Budget Data: `, budgetData);
-    console.log(`=============`)
-    console.log('')
+    if (incomeData === false || budgetData === false) {
+        showAlert();
+        return;
+    }
+
+    // console.log('')
+    // console.log(`=============`)
+    // console.log(`USER DATA`)
+    // console.log(`---------`)
+    // console.log(`First name: ${firstName}`);
+    // console.log(`Last name: ${lastName}`);
+    // console.log(`Country: ${country}`);
+    // console.log(`Currency: ${currency}`);
+    // console.log(`Income Data: `, incomeData);
+    // console.log(`Budget Data: `, budgetData);
+    // console.log(`=============`)
+    // console.log('')
 
     // Check if info is valid / sufficient - alert user if not
     // TCB //
 
-    // GET SYMBOL //
-    // TBC //
 
     // Create object of specified schema
     let userData = {
@@ -184,7 +184,7 @@ function addNewBlock(div, type, placeholder, symbol) {
     const amountInput = document.createElement("input");
     amountInput.classList.add("form-control");
     amountInput.setAttribute("type", "text");
-    amountInput.setAttribute("placeholder", `${symbol} Amount`);
+    amountInput.setAttribute("placeholder", `Amount`);
     amountInput.setAttribute("data-type", `amount`);
 
     const freqSelection = document.createElement("select");
@@ -233,6 +233,7 @@ function getSectionData(parentDiv, includeOver = false) {
     // Array that will be returned
     let arr = [];
 
+    //  Count entries
     let entriesCount = parentDiv.childElementCount;
 
     // For each child of parent Div
@@ -249,6 +250,19 @@ function getSectionData(parentDiv, includeOver = false) {
             const type = child.children[j].children[0].dataset.type;
             const value = child.children[j].children[0].value;
 
+            // Amount Evaluation
+            if (type === "amount") {
+                let am = isNumber(value);
+
+                if (am === false) {
+                    return false;
+                } else {
+                    obj[type] = isNumber(value);
+                }
+            } else {
+                obj[type] = value;
+            }
+            
             obj[type] = value;
         }
 
@@ -268,11 +282,27 @@ function toggleNewUserVisibility() {
 
     if (value === "show") {
         newUserBlock.classList.add('hidden');
-        newUserBlock.dataset.display = "hidden"
+        newUserBlock.dataset.display = "hidden";
     }
     
     if (value === "hidden") {
         newUserBlock.classList.remove('hidden');
-        newUserBlock.dataset.display = "show"
+        newUserBlock.dataset.display = "show";
+    }
+}
+
+
+function isNumber(input) {
+    // Try to convert the input to a number
+    const number = parseFloat(input);
+
+    // Check if the conversion was successful and the result is a finite number
+    if (!isNaN(number) && isFinite(number)) {
+        return input;
+    } else {
+        console.log(`'${input}' is not a valid input. Please enter a number.`);
+        // localStorage.removeItem('WalletWizUsername');
+        
+        return false;
     }
 }
