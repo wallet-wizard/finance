@@ -36,11 +36,11 @@ const DATA = JSON.parse(localStorage.getItem('walletWizDataSet')) || {};
 // EVENT LISTENERS
 
 addIncomeBtn.addEventListener('click', () => {
-    addNewBlock(incomeDiv, 'income', 'My Company LTD.', '$');
+    addNewBlock(incomeDiv, 'income', 'Income Source', '$');
 });
 
 addBudgetBtn.addEventListener('click', () => {
-    addNewBlock(budgetDiv, 'budget', 'Groceries', '$');
+    addNewBlock(budgetDiv, 'budget', 'Budget type', '$');
 });
 
 removeIncomeBtn.addEventListener('click', () => {
@@ -184,7 +184,7 @@ function addNewBlock(div, type, placeholder, symbol) {
     const amountInput = document.createElement("input");
     amountInput.classList.add("form-control");
     amountInput.setAttribute("type", "text");
-    amountInput.setAttribute("placeholder", `${symbol} Amount`);
+    amountInput.setAttribute("placeholder", `Amount`);
     amountInput.setAttribute("data-type", `amount`);
 
     const freqSelection = document.createElement("select");
