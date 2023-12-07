@@ -269,10 +269,14 @@ function createBudgetBlock(desc, currentAmount, cap) {
     const dividerSpan = createNewEl("span", ["divider", "with-space"], "/");
     const symbolSpan1 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
     const symbolSpan2 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
-
+    
     // Append spans to amount Container
     amountContainer.append(symbolSpan1, currentAmountSpan, dividerSpan, symbolSpan2, capAmountSpan);
-
+    
+    // Add base-amount attribute to .number(s) - used in api-main.js to exchange to other currencies
+    currentAmountSpan.setAttribute("data-base-amount", currentAmount);
+    capAmountSpan.setAttribute("data-base-amount", cap);
+    
 
     // Create button Container
     const modifyBtnContainer = createNewEl("div", ["col-6", "d-flex", "justify-content-end"]);
@@ -518,8 +522,6 @@ function getCurrentYearDays() {
 // 5. Add expense to USER DATA
 function addExpense(desc, amount, budgetType) {
 
-    const budgetBlocks = document.querySelectorAll(".budget-block");
-
     let localStorageData = DATA;
 
     let newExpense = {
@@ -564,7 +566,8 @@ function addExpense(desc, amount, budgetType) {
     // Update localStorage
     const stringifiedData = JSON.stringify(localStorageData);
     localStorage.setItem("walletWizDataSet", stringifiedData);
-    console.log("DONE!");
+
+    location.reload();
 }
 
 

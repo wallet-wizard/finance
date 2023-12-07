@@ -1,8 +1,22 @@
+:root {
+    --bg-1-dark: rgb(33, 33, 33);
+    --bg-2-purple: rgb(45, 40, 50);
+    --bg-2b-purple-trnsp: rgba(45, 40, 50, 0.889);
+    --bg-3-modal: rgba(68, 60, 77, 0.934);
+    --bg-3: rgba(163, 148, 178, 0.193);
+    --button-primary: rgb(137, 44, 230);
+    --text-primary: rgb(169, 111, 227);
+}
+
+
+.budget {
+    padding-top: 7rem;
+}
 
 /* dashboard styles */
 
 section.dashboard{
-    background-color: black !important;
+    background-color: var(--bg-1-dark) !important;
     color: white;
 }
 
@@ -10,14 +24,10 @@ section.dashboard{
     margin: 0 auto;
 }
 
-#dash-banner{
-    display: flex;
-    justify-content: space-between;
+#dash-banner {
+    background-color: var(--bg-2b-purple-trnsp);
 }
 
-#banner-content{
-    display: flex;
-}
 
  #message-and-button{
     margin: auto 0;
@@ -28,13 +38,17 @@ section.dashboard{
 }
 
 #tag-text{
-    color: rgb(137, 44, 230);
+    color: var(--text-primary);
 }
 
 #message-and-button #welcome-message{
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
+#button-label {
+    font-size: 0.8rem;
+    color:#908f8f;
+}
 
 #switch-button{
     margin: auto 0;
@@ -50,35 +64,23 @@ section.dashboard{
 
 #todays-date{
     margin: auto 0 !important;
+    color: #908f8f;
+    font-size: 0.9rem;
+    font-weight: 300;
 }
 
 #button-and-text{
     display: flex;
 }
 
-#dash-banner p{
-    margin: auto 0;
-}
 
 #logo{
     max-height: 100px;
 }
 
-#logo-and-tag{
-    display: flex;
-
-}
-
-#tagline{
-    margin: auto 0;
-}
 
 
 
-
-
-
-/* new expense section styles */
 
 
 
@@ -89,7 +91,8 @@ section.dashboard{
     margin-right: 2px;
 }
 section.budget{
-    background-color: rgb(16, 16, 16);
+    background: linear-gradient(to bottom, var(--bg-2-purple) 5%, var(--bg-1-dark) 60%);
+    /* background-color: var(--bg-1-dark); */
     color: aliceblue;
     padding-bottom: 10px;
 }
@@ -127,8 +130,6 @@ section.budget{
     margin: 0 15px;
 }
 
-
-
 /* === DYNAMIC INCOME SECTION styles === */
 
 .income-outer-graph {
@@ -146,10 +147,15 @@ section.budget{
     color: black;
 }
 
+#overview-section {
+    background-color: var(--bg-3);
+    border-radius: 10px;
+}
+
+
 #income-information .graph-text {
     max-width: 20rem;
     font-size: 12px;
-
 }
 
 #income-information .header {
@@ -160,7 +166,7 @@ section.budget{
 
 /* ----- Currency Exchange Styles ----- */
 section.currency-exchange{
-    background-color: rgb(85, 32, 138);
+    background-color: var(--bg-1-dark);
     color: white;
 }
 
@@ -172,16 +178,28 @@ section.currency-exchange{
 
 /* *** MODAL *** */
 
+/* .budget-modal{
+    color: rgb(80, 50, 50);
+} */
+
 .budget-modal .modal-content {
-    background-color: #414141;
-    border-radius: 3px;
+    background-color: var(--bg-3-modal);
+    border-radius: 13px;
+}
+.budget-modal .btn-close {
+    color: white;
+}
+.budget-modal .modal-header {
+    border: none;
+    text-align: center;
+}
+.budget-modal .modal-body {
+    border: none;
+}
+.budget-modal .modal-footer {
+    border: none;
 }
 
-
-
-@media (max-width: 768px) {
-
-    #logo-and-tag{
-        margin: 0 auto !important;
-    }
+.budget-modal{
+    border: none;
 }
