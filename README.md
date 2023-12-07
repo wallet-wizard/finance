@@ -12,10 +12,15 @@ Wallet Wizard is a collaborative project developed by a team of Front End develo
 1. [Getting Started](#getting-started)
 2. [Features](#features)
 3. [File Structure](#file-structure)
-4. [Installation](#installation)
-5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [License](#license)
+4. [Motivations](#Motivations)
+5. [Problems Addressed](#problems-addressed)
+6. [Installation](#installation)
+7. [Usage](#usage)
+8. [Contributing](#contributing)
+9. [Credits](#credits)
+10. [License](#license)
+11. [Links](#links)
+12. [Resources](#resources)
 
 ## Getting Started
 
@@ -189,7 +194,7 @@ Developing Wallet Wizard provided valuable insights and skills:
 
 ## Credits
 
-This project was developed by [Your Name]. The GitHub repository is available at [Wallet Wizard Repository](https://github.com/yourusername/wallet-wizard/).
+This project was developed by Ahmed Abshir (@syntaxError-23), Dimitris Giannoulis (@jimmygian), and Eleni Giannopoulos (@EleniMG). The GitHub repository is available at [Wallet Wizard Repository](https://github.com/wallet-wizard/finance).
 
 ## License
 
@@ -197,8 +202,8 @@ This project is licensed under the MIT License, providing flexibility for use, m
 
 ## Links
 
-- GitHub Repository: [Wallet Wizard Repository](https://github.com/yourusername/wallet-wizard/)
-- Live Demo: [Wallet Wizard Demo](https://yourusername.github.io/wallet-wizard/)
+- GitHub Repository: [Wallet Wizard Repository](https://github.com/wallet-wizard/finance)
+- Live Demo: [Wallet Wizard Demo](https://wallet-wizard.github.io/finance/)
 
 
 
@@ -209,7 +214,6 @@ This project is licensed under the MIT License.
 
 ## Resources
 
-# Third Party Resources
 [All Countries Drop Down List - HTML Code Generator](https://www.html-code-generator.com/html/drop-down/country-names)
 
 [Array.prototype.findIndex() - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex)
