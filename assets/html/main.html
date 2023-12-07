@@ -18,23 +18,35 @@
     <!-- Dashboard section -->
     <section class="dashboard">
         <div class="container-fluid">
-            <h3 id="todays-date" class="text-center py-3"></h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 id="dashboard-month" class="text-center"></h4>
 
-                    <div id="dash-info-div" class="w-50 py-2">
-                        <p>Income: <span id="dash-income"></span></p>
-                        <p>Expenses: <span id="dash-expenses"></span></p>
-                        <p>Savings: <span id="dash-savings"></span></p>
+            <div id="dash-banner" class="row">
+            
+                <div id="logo-and-tag" class="col-md-7">
+
+                    <img src="../images/ww-logo-outline.png" alt="Wallet Wizard logo" id="logo">
+
+                    <div id="tagline" class="px-3">
+                        <p class="lead text-center" id="brand">Wallet Wizard</p>
+                        <p class="text-center" id="tag-text">Your Money, Our Magic</p>
+                    </div>
+
+                </div>
+                    
+                <div id="message-and-button" class="col-6 col-md-3">
+                    <p id="welcome-message" class="text-center">Welcome, <span id="welcome-name" class="user-name"></span></p>
+                    <div id="button-and-text">
+                        <p id="button-label">Not <span class="user-name" id="button-name"></span>?</p>
+                        <button class="btn btn-primary" id="switch-button">Switch User</button>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <h4 id="recent-heading" class="text-center">Recent</h4>
+                <div id="date-wrapper" class="col-6 col-md-2 d-flex flex-column justify-content-center">
+                    <p id="todays-date" class="align-self-center"></p>
                 </div>
-
+            
+                
             </div>
+            
         </div>
     </section>
 
@@ -175,18 +187,22 @@
     </section>
     
     <!-- Currency exchange section -->
-    <section class="currency-exchange">
-        <div class="container-fluid">
+    <section class="currency-exchange p-4">
+        <div class="container-fluid py-3 currency-exchange-wrapper d-flex flex-column align-items-center">
             <h3 class="text-center pt-3">Currency Exchange</h3>
-            <div class="col-4 col-sm-6">
-                <label for="currency">Select new currency:</label>
+            <div class="col-4 col-sm-6 currency-exchange-form">
+                <label class="pb-2" for="currency">Select new currency:</label>
                 <select class="form-control" id="currency-exchange">
                     <option>...</option>
                                      
                 </select>
-                <button class="btn btn-primary submit-btn" id="currency-exchange-button" type="submit">Submit</button>
+                <button class="btn btn-primary submit-btn mt-2" id="currency-exchange-button" type="submit">Submit</button>
             </div>
         </div>
+    </section>
+
+    <section id="extra-space">
+        <div id="strip"></div>
     </section>
 
     <!-- bootstrap popper -->

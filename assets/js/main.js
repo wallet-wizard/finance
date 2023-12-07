@@ -3,10 +3,12 @@ var amountInput = $('#amount-input');
 var descInput = $('#description-input');
 var todaysDate = $('#todays-date');
 var dashboardMonth = $('#dashboard-month');
-var newExpenseBtn = $('#new-expense-submit')
+var newExpenseBtn = $('#new-expense-submit');
+var userName = $('.user-name');
+var switchUserButton = $('#switch-button');
 
 var longDate = dayjs().format('dddd D MMMM YYYY');
-todaysDate.text(longDate)
+todaysDate.text(longDate);
 
 
 // GLOBAL CONSTS
@@ -40,7 +42,7 @@ const CURRENCY_SYMBOL = "";
 
 // ================================== //
 
-
+  
 // Update Date
 dashboardMonth.text(dayjs().format('MMMM'))
 const DAYSINMONTH = dayjs().daysInMonth();
@@ -261,11 +263,8 @@ function createBudgetBlock(desc, currentAmount, cap) {
     const amountContainer = createNewEl("p", ["col-6", "m-0", "d-flex", "align-items-center", "amount-container"]);
     // Current Amount Span
     const currentAmountSpan = createNewEl("span", ["number", "current-amount-num"], currentAmount);
-    currentAmountSpan.setAttribute('data-base-amount', currentAmount);
     // Cap Amount Span
     const capAmountSpan = createNewEl("span", ["number", "cap-amount-num"], cap);
-    capAmountSpan.setAttribute('data-base-amount', cap);
-
     //  Divider && Symbol Spans
     const dividerSpan = createNewEl("span", ["divider", "with-space"], "/");
     const symbolSpan1 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
@@ -637,4 +636,13 @@ function updateSpentHTMLInfo(totalSpent) {
     spentAmountEl.setAttribute("data-base-amount", totalSpent);
     spentAmountEl.innerText = totalSpent;
 }
+
+userName.text(basicInfo.name);
+
+switchUserButton.on('click' , () => {
+    console.log('hi mum');
+
+    window.location.href = "../../index.html"
+})
+
 
