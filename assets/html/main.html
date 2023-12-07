@@ -17,99 +17,80 @@
 
     <!-- Dashboard section -->
     <section class="dashboard">
-        <div class="container-fluid">
+
+        <!-- Banner -->
+        <div id="banner" class="container-fluid position-fixed">
 
             <div id="dash-banner" class="row">
-            
-                <div id="logo-and-tag" class="col-md-7">
 
-                    <img src="../images/ww-logo-outline.png" alt="Wallet Wizard logo" id="logo">
+                <!-- Logo Section (1st col) -->
+                <div id="logo-and-tag" class="col-6 col-md-5 m-0 d-flex justify-content-start align-items-center">
 
-                    <div id="tagline" class="px-3">
-                        <p class="lead text-center" id="brand">Wallet Wizard</p>
-                        <p class="text-center" id="tag-text">Your Money, Our Magic</p>
+                    <img class="m-0" src="../images/ww-logo-outline.png" alt="Wallet Wizard logo" id="logo">
+
+                    <div class="px-3 m-0" id="tagline">
+                        <p class="lead text-center m-0" id="brand">Wallet Wizard</p>
+                        <p class="text-center m-0 d-none d-sm-block" id="tag-text">Your Money, Our Magic</p>
                     </div>
 
                 </div>
-                    
-                <div id="message-and-button" class="col-6 col-md-3">
-                    <p id="welcome-message" class="text-center">Welcome, <span id="welcome-name" class="user-name"></span></p>
-                    <div id="button-and-text">
-                        <p id="button-label">Not <span class="user-name" id="button-name"></span>?</p>
-                        <button class="btn btn-primary" id="switch-button">Switch User</button>
-                    </div>
-                </div>
 
-                <div id="date-wrapper" class="col-6 col-md-2 d-flex flex-column justify-content-center">
+                <!-- 2nd col -->
+                <div id="date-wrapper" class="col d-none d-md-flex flex-column justify-content-center text-center">
                     <p id="todays-date" class="align-self-center"></p>
                 </div>
-            
-                
+
+                <!-- 3rd col  -->
+                <div id="message-and-button" class="col-6 col-md-5 row justify-content-end">
+                    <p id="welcome-message" class="col-12 text-end m-0">Welcome, <span id="welcome-name"
+                            class="user-name"></span></p>
+                    <div id="button-and-text" class="col-12 text-end m-0 p-0">
+                        <p class="col m-0 align-self-center" id="button-label">Not <span class="user-name"
+                                id="button-name"></span>?</p>
+                        <button class="btn btn-primary m-0" id="switch-button">Switch User</button>
+                    </div>
+                </div>
+
             </div>
-            
+
         </div>
     </section>
 
-
-    <!-- New expense section -->
-    <section class="new-expense bg-secondary">
-        <div class="container-fluid">
-            <div class="row py-3" id="new-expense-container">
-                <div class="header-wrapper col-md-3">
-                    <p class="text-white">New expense/income:</p>
-                </div>
-                <div class="amount-wrapper col-md-2 px-3"><input class="form-control" type="text" placeholder="Amount"
-                        id="amount-input" aria-label="default input"></div>
-                <div class="description-wrapper col-md-3"><input class="form-control" type="text"
-                        placeholder="Short Description" id="description-input" aria-label="default input"></div>
-                <div class="dropdown-wrapper col-md-2">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Expense type</option>
-                        <option value="1">Grocery</option>
-                        <option value="2">Transport</option>
-                        <option value="3">Entertainment</option>
-                    </select>
-                    </select>
-                </div>
-                <div class="button-wrapper col-md-1"><input class="btn btn-primary" type="submit" value="Submit"
-                        id="new-expense-submit"></div>
-            </div>
-        </div>
-    </section>
 
 
     <!-- Budget section -->
     <section class="budget">
         <div class="pt-5 pb-5 container-fluid">
 
-            <!--  -->
-            <h3 class="display-5 text-center pt-3">Overview</h3>
-
-            <!-- *** INCOME INFO *** -->
-            <div class="m-3 pt-2 m-md-5 mb-3 mt-3" id="income-information">
-
-                <!-- INCOME-SECTION Container -->
-                <div class="pb-5 pt-5 container-fluid row align-items-center mb-2">
-
-                    <div class="col-5 col-md-6 p-0 dynamic-income-info income-graphs">
-                        <!-- Income Graph DYNAMICALLY CREATED from main.js -->
+            <div id="overview-section" class="m-0 p-0">
+                <h3 class="display-5 text-center pt-3">Overview</h3>
+    
+                <!-- *** INCOME INFO *** -->
+                <div class="ms-3 ms-md-5 mb-3" id="income-information">
+    
+                    <!-- INCOME-SECTION Container -->
+                    <div class="row pb-5 pt-5 container-fluid align-items-center mb-2">
+    
+                        <div class="col-5 col-md-6 p-0 dynamic-income-info income-graphs">
+                            <!-- Income Graph DYNAMICALLY CREATED from main.js -->
+                        </div>
+    
+                        <!-- INCOME Details -->
+                        <div id="income-details-section" class="col-7 col-md-6 text-center">
+                            <h5 class="header">TOTAL</h5>
+                            <p class="income-details">
+                                <span class="details-text">Income:</span>
+                                <span class="currency-symbol">$</span>
+                                <span class="number amount">2000</span>
+                            </p>
+                            <p class="more-details">
+                                <span class="details-text">Spent:</span>
+                                <span class="currency-symbol">$</span>
+                                <span class="number amount spent">200</span>
+                            </p>
+                        </div>
+    
                     </div>
-
-                    <!-- INCOME Details -->
-                    <div id="income-details-section" class="col-7 col-md-6 text-center">
-                        <h5 class="header">TOTAL</h5>
-                        <p class="income-details">
-                            <span class="details-text">Income:</span>
-                            <span class="currency-symbol">$</span>
-                            <span class="number amount">2000</span>
-                        </p>
-                        <p class="more-details">
-                            <span class="details-text">Spent:</span>
-                            <span class="currency-symbol">$</span>
-                            <span class="number amount spent">200</span>
-                        </p>
-                    </div>
-
                 </div>
             </div>
 
@@ -148,16 +129,18 @@
                                 <div class="add-expense mb-2 mt-2 ms-0 me-0">
                                     <div class="income-block row">
                                         <div class="col-12 col-sm-6 p-1">
-                                            <input type="text" id="budget-modal-expense-desc" class="form-control" placeholder="Short desc"
-                                                data-type="desc">
+                                            <input type="text" id="budget-modal-expense-desc" class="form-control"
+                                                placeholder="Short desc" data-type="desc">
                                         </div>
                                         <div class="col-7 col-sm-3 p-1">
-                                            <input type="text" id="budget-modal-expense-amount" class="form-control" placeholder="Amount"
-                                                data-type="amount">
+                                            <input type="text" id="budget-modal-expense-amount" class="form-control"
+                                                placeholder="Amount" data-type="amount">
                                         </div>
                                         <div class="col-5 col-sm-3 p-1">
-                                            <select class="form-control" id="budget-modal-expense-type" data-type="type">
-                                                <option value="" id="budget-modal-default-option" disabled selected>Budget</option>
+                                            <select class="form-control" id="budget-modal-expense-type"
+                                                data-type="type">
+                                                <option value="" id="budget-modal-default-option" disabled selected>
+                                                    Budget</option>
                                             </select>
                                         </div>
                                     </div>
@@ -185,7 +168,14 @@
 
         </div>
     </section>
-    
+
+
+
+
+
+
+
+
     <!-- Currency exchange section -->
     <section class="currency-exchange p-4">
         <div class="container-fluid py-3 currency-exchange-wrapper d-flex flex-column align-items-center">
@@ -194,9 +184,10 @@
                 <label class="pb-2" for="currency">Select new currency:</label>
                 <select class="form-control" id="currency-exchange">
                     <option>...</option>
-                                     
+
                 </select>
-                <button class="btn btn-primary submit-btn mt-2" id="currency-exchange-button" type="submit">Submit</button>
+                <button class="btn btn-primary submit-btn mt-2" id="currency-exchange-button"
+                    type="submit">Submit</button>
             </div>
         </div>
     </section>

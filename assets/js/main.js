@@ -269,10 +269,14 @@ function createBudgetBlock(desc, currentAmount, cap) {
     const dividerSpan = createNewEl("span", ["divider", "with-space"], "/");
     const symbolSpan1 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
     const symbolSpan2 = createNewEl("span", "currency-symbol", CURRENCY_SYMBOL);
-
+    
     // Append spans to amount Container
     amountContainer.append(symbolSpan1, currentAmountSpan, dividerSpan, symbolSpan2, capAmountSpan);
-
+    
+    // Add base-amount attribute to .number(s) - used in api-main.js to exchange to other currencies
+    currentAmountSpan.setAttribute("data-base-amount", currentAmount);
+    capAmountSpan.setAttribute("data-base-amount", cap);
+    
 
     // Create button Container
     const modifyBtnContainer = createNewEl("div", ["col-6", "d-flex", "justify-content-end"]);
