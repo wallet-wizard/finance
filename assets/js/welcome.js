@@ -6,6 +6,8 @@ Then, use test1 / test2 / test3 / test4 in username.
 
 */
 
+// Remove Staging
+localStorage.removeItem('WWuserStaging');
 
 // SELECTORS
 
@@ -104,7 +106,6 @@ formDiv.addEventListener('submit', (event) => {
     const budgetData = getSectionData(budgetDiv, true);
 
     if (incomeData === false || budgetData === false) {
-        showAlert();
         return;
     }
 

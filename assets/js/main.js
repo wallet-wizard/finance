@@ -19,6 +19,9 @@ const budgetModalBtn = document.querySelector("#submit-modal-btn");
 
 // ============ USER DATA ============= //
 
+// Remove Staging
+localStorage.removeItem('WWuserStaging');
+
 // GET USER DATA from localStorage (or "null" if key doesn't exist in localStorage)
 const CURRENT_USER = localStorage.getItem('WalletWizUsername') || null;
 
